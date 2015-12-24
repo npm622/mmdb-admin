@@ -1,0 +1,27 @@
+{  
+   "name":"mmdb-admin",
+   "version":"0.0.0",
+   "description":"angular admin directive that enables CRUD-ability on an apg generated project",
+   "keywords":[  
+
+   ],
+   "homepage":"https://github.com/npm622/mmdb-admin#readme",
+   "bugs":{  
+      "url":"https://github.com/npm622/mmdb-admin/issues"
+   },
+   "license":"MIT",
+   "author":"nick makes",
+   "repository":{  
+      "type":"git",
+      "url":"git+https://github.com/npm622/mmdb-admin.git"
+   },
+   "devDependencies":{  
+      "fs":"0.0.2",
+      "gulp":"^3.9.0",
+      "gulp-angular-templatecache":"^1.8.0",
+      "gulp-bower":"0.0.11",
+      "gulp-clean":"^0.3.1",
+      "gulp-concat":"^2.6.0",
+      "gulp-replace-task":"^0.11.0"
+   }
+}
