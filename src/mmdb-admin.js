@@ -1,32 +1,17 @@
 (function() {
 	'use strict';
 
-	angular.module( 'mmdb.toolbar', [ 'ui.router' ] )
-
-	.provider( 'mmdbToolbar', function() {
-
-		this.setSchema = function(schema) {
-			this.schema = schema;
-		};
+	angular.module( 'mmdb.admin', [ 'app', 'ui.router' ] )
+	
+	.provider('mmdbAdminProvider', function(){
+		this.setSchema = function(SCHEMA) {
+			this.schema = SCHEMA;
+		}
 
 		this.$get = function() {
 			return this;
 		};
-	} )
-
-	.directive( 'mmdbToolbar', function() {
-		return {
-			restrict : 'E',
-			templateUrl : 'mmdb-toolbar.tmpl.html',
-			scope : {
-				baseServiceEndpoint: '@'
-			},
-			controller : 'MmdbToolbarCtrl',
-			controllerAs : 'mmdbToolbar',
-			bindToController : true,
-			transclude: true
-		}
-	} )
+	})
 
 	.config( function config($stateProvider) {
 		$stateProvider.state( 'mmdbAdmin', {
@@ -40,12 +25,20 @@
 		} );
 	} )
 
-	.controller( 'MmdbAdminCtrl', [ 'mmdbAdmin', MmdbAdminCtrl ] );
+	.factory( 'MmdbAdmin', [ 'SCHEMA', MmdbAdmin ] )
 
-	function MmdbAdminCtrl(mmdbAdmin) {
+	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminProvider', 'MmdbAdmin', MmdbAdminCtrl ] );
+
+	function MmdbAdmin(schema) {
+		return {
+			schema : schema
+		}
+	}
+
+	function MmdbAdminCtrl(mmdbAdminProvider, MmdbAdmin) {
 		var vm = this;
-
-		vm.brand = mmdbToolbar.brand;
+		
+		vm.schema = mmdbAdminProvider.schema;
 	}
 
 	@@templateCache
