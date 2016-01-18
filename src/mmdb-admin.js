@@ -1,9 +1,9 @@
 (function() {
 	'use strict';
 
-	angular.module( 'mmdb.admin', [ 'app', 'ui.router' ] )
+	angular.module( 'mmdb.admin', [ 'ui.router' ] )
 	
-	.provider('mmdbAdminProvider', function(){
+	.provider('mmdbAdminConfig', function(){
 		this.setSchema = function(SCHEMA) {
 			this.schema = SCHEMA;
 		}
@@ -27,7 +27,7 @@
 
 	.factory( 'MmdbAdmin', [ 'SCHEMA', MmdbAdmin ] )
 
-	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminProvider', 'MmdbAdmin', MmdbAdminCtrl ] );
+	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] );
 
 	function MmdbAdmin(schema) {
 		return {
@@ -35,10 +35,10 @@
 		}
 	}
 
-	function MmdbAdminCtrl(mmdbAdminProvider, MmdbAdmin) {
+	function MmdbAdminCtrl(mmdbAdminConfig, MmdbAdmin) {
 		var vm = this;
 		
-		vm.schema = mmdbAdminProvider.schema;
+		vm.schema = mmdbAdminConfig.schema;
 	}
 
 	@@templateCache
