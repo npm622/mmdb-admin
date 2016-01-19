@@ -25,6 +25,32 @@
 		} );
 	} )
 	
+	.directive('mmdbAdminToolPanel', function(){
+		return {
+			restrict: 'E',
+			templateUrl:'mmdb-admin-tool-panel.tmpl.html',
+			scope: {
+				activeTable: '=',
+				schemaName: '@'
+			},
+			controller: 'MmdbAdminToolCtrl',
+			controllerAs: 'mmdbAdminTool',
+			bindToController: true
+		}
+	})
+	
+	.directive('mmdbAdminSearchPanel', function(){
+		return {
+			restrict: 'E',
+			templateUrl:'mmdb-admin-search-panel.tmpl.html',
+			scope: {
+			},
+			controller: 'MmdbAdminSearchCtrl',
+			controllerAs: 'mmdbAdminSearch',
+			bindToController: true
+		}
+	})
+	
 	.directive('mmdbAdminTablesPanel', function(){
 		return {
 			restrict: 'E',
@@ -70,6 +96,14 @@
 		var vm = this;
 		
 		vm.schema = mmdbAdminConfig.schema;
+	}
+	
+	function MmdbAdminToolCtrl() {
+		var vm = this;
+	}
+	
+	function MmdbAdminSearchCtrl() {
+		var vm = this;
 	}
 	
 	function MmdbAdminTablesCtrl() {
