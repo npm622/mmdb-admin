@@ -5,3 +5,7 @@
 .spacer {
     margin-top: 15px;
 }
+
+a:hover {
+    border: 1px solid white;
+}

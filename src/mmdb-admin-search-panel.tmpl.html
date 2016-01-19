@@ -1,13 +1,11 @@
 <div class="panel panel-stacked panel-success">
     <div class="panel-heading">
-        search by
-        <div class="dropdown">
-            <a class="btn btn-default" data-toggle="dropdown" href="#">id</a>
+        search by <span class="dropdown"> <a data-toggle="dropdown" href="#">{{mmdbAdminSearch.activeSearchMode}} <span
+                class="glyphicon glyphicon-menu-down"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li><a>id</a></li>
-                <li><a>data</a></li>
+                <li ng-repeat="searchMode in mmdbAdminSearch.searchModes" ng-click="mmdbAdminSearch.select($index)"><a>{{searchMode}}</a></li>
             </ul>
-        </div>
+        </span>
     </div>
     <div class="panel-body">search pane to be built</div>
 </div>

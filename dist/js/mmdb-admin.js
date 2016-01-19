@@ -118,6 +118,18 @@
 	
 	function MmdbAdminSearchCtrl() {
 		var vm = this;
+		
+		vm.searchModes = ["id", "data"];
+		
+		vm.activeSearchMode = searchModes[0];
+		
+		vm.select = function(idx) {
+			vm selection = vm.searchModes[idx];
+			if (selection == vm.activeSearchMode) {
+				return;
+			}
+			vm.activeSearchMode = selection; 
+		}
 	}
 	
 	function MmdbAdminTablesCtrl() {
@@ -132,7 +144,7 @@
 		var vm = this;
 	}
 
-	angular.module("mmdb.admin").run(["$templateCache", function($templateCache) {$templateCache.put("mmdb-admin-search-panel.tmpl.html","<div class=\"panel panel-stacked panel-success\">\n    <div class=\"panel-heading\">\n        search by\n        <div class=\"dropdown\">\n            <a class=\"btn btn-default\" data-toggle=\"dropdown\" href=\"#\">id</a>\n            <ul class=\"dropdown-menu\" role=\"menu\">\n                <li><a>id</a></li>\n                <li><a>data</a></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"panel-body\">search pane to be built</div>\n</div>");
+	angular.module("mmdb.admin").run(["$templateCache", function($templateCache) {$templateCache.put("mmdb-admin-search-panel.tmpl.html","<div class=\"panel panel-stacked panel-success\">\n    <div class=\"panel-heading\">\n        search by <span class=\"dropdown\"> <a data-toggle=\"dropdown\" href=\"#\">{{mmdbAdminSearch.activeSearchMode}} <span\n                class=\"glyphicon glyphicon-menu-down\"></span></a>\n            <ul class=\"dropdown-menu\" role=\"menu\">\n                <li ng-repeat=\"searchMode in mmdbAdminSearch.searchModes\" ng-click=\"mmdbAdminSearch.select($index)\"><a>{{searchMode}}</a></li>\n            </ul>\n        </span>\n    </div>\n    <div class=\"panel-body\">search pane to be built</div>\n</div>");
 $templateCache.put("mmdb-admin-status-panel.tmpl.html","<div class=\"panel panel-stacked panel-success\">\n    <div class=\"panel-body\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">status dashboard for {{mmdbAdminStatus.activeTable.sqlName}}</div>\n        </div>\n        <div class=\"row\">\n            <div class=\"col-md-12\" ng-transclude></div>\n        </div>\n    </div>\n</div>");
 $templateCache.put("mmdb-admin-tables-panel.tmpl.html","<div class=\"big-row panel panel-stacked panel-success\">\n    <div class=\"panel-body\">\n        <div class=\"row\" ng-class=\"{spacer: $index > 0}\" ng-repeat=\"table in mmdbAdminTables.tables\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-block btn-default\" ng-click=\"mmdbAdminTables.select($index)\">{{table.sqlName}}</button>\n            </div>\n        </div>\n    </div>\n</div>");
 $templateCache.put("mmdb-admin-tool-panel.tmpl.html","<div class=\"panel panel-stacked panel-success\">\n    <div class=\"panel-heading\">db schema: {{mmdbAdminTool.schemaName}}</div>\n    <div class=\"panel-body\">\n        <div class=\"row\">\n            <div class=\"col-md-12\">\n                active table: <a ng-click=\"\">{{mmdbAdminTool.activeTable.sqlName}}</a>\n            </div>\n        </div>\n        <div class=\"row spacer\">\n            <div class=\"col-md-12\">\n                <button class=\"btn btn-block btn-default\">add</button>\n            </div>\n        </div>\n        <div class=\"row spacer\">\n            <div class=\"col-md-6\">\n                <button class=\"btn btn-block btn-default\">import</button>\n            </div>\n            <div class=\"col-md-6\">\n                <button class=\"btn btn-block btn-default\">export</button>\n            </div>\n        </div>\n    </div>\n</div>");
