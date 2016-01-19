@@ -25,12 +25,25 @@
 		} );
 	} )
 	
+	.directive('mmdbAdminTablesPanel', function(){
+		return {
+			restrict: 'E',
+			templateUrl:'mmdb-admin-tables-panel.tmpl.html',
+			scope: {
+				tables: '='
+			},
+			controller: 'MmdbAdminTablesCtrl',
+			controllerAs: 'mmdbAdminTables',
+			bindToController: true
+		}
+	})
+	
 	.directive('mmdbAdminStatusPanel', function(){
 		return {
 			restrict: 'E',
 			templateUrl:'mmdb-admin-status-panel.tmpl.html',
 			scope: {
-				activeTable: '@'
+				activeTable: '='
 			},
 			controller: 'MmdbAdminStatusCtrl',
 			controllerAs: 'mmdbAdminStatus',
@@ -42,6 +55,8 @@
 	.factory( 'MmdbAdmin', [ 'SCHEMA', MmdbAdmin ] )
 
 	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] )
+
+	.controller( 'MmdbAdminTablesCtrl', [ MmdbAdminTablesCtrl ] )
 
 	.controller( 'MmdbAdminStatusCtrl', [ MmdbAdminStatusCtrl ] );
 
@@ -55,6 +70,10 @@
 		var vm = this;
 		
 		vm.schema = mmdbAdminConfig.schema;
+	}
+	
+	function MmdbAdminTablesCtrl() {
+		var vm = this;
 	}
 	
 	function MmdbAdminStatusCtrl() {
