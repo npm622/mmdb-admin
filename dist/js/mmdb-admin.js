@@ -82,6 +82,10 @@
 
 	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] )
 
+	.controller( 'MmdbAdminToolCtrl', [ MmdbAdminToolCtrl ] )
+
+	.controller( 'MmdbAdminSearchCtrl', [ MmdbAdminSearchCtrl ] )
+
 	.controller( 'MmdbAdminTablesCtrl', [ MmdbAdminTablesCtrl ] )
 
 	.controller( 'MmdbAdminStatusCtrl', [ MmdbAdminStatusCtrl ] );
