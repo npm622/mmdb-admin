@@ -1,9 +1,8 @@
 <div class="panel panel-stacked panel-success">
     <div class="panel-heading">
-        search by <span class="dropdown"> <a data-toggle="dropdown" href="#">{{mmdbAdminSearch.activeSearchMode}} <span
-                class="glyphicon glyphicon-menu-down"></span></a>
+        search by <span class="dropdown"> <a data-toggle="dropdown">{{mmdbAdminSearch.activeSearchMode}} <span class="glyphicon glyphicon-menu-down"></span></a>
             <ul class="dropdown-menu" role="menu">
-                <li ng-repeat="searchMode in mmdbAdminSearch.searchModes" ng-click="mmdbAdminSearch.select($index)"><a>{{searchMode}}</a></li>
+                <li ng-repeat="searchMode in mmdbAdminSearch.searchModes"><a class="btn btn-info" ng-click="mmdbAdminSearch.select($index)">{{searchMode}}</a></li>
             </ul>
         </span>
     </div>
