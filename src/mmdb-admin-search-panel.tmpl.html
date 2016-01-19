@@ -6,5 +6,9 @@
             </ul>
         </span>
     </div>
-    <div class="panel-body">search pane to be built</div>
+    <div class="panel-body animate-switch-container" ng-switch="mmdbAdminSearch.activeSearchMode">
+        <div class="animate-switch" ng-switch-when="id">this will be the id search pane...</div>
+        <div class="animate-switch" ng-switch-when="data">...and this will be the data search pane</div>
+        <div class="animate-switch" ng-switch-default>why am i here? how do i search by {{mmdbAdminSearch.activeSearchMode}}?</div>
+    </div>
 </div>
