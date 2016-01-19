@@ -101,6 +101,7 @@
 		var vm = this;
 		
 		vm.schema = mmdbAdminConfig.schema;
+		
 		vm.activeTable = vm.schema.tables[0];
 		
 		vm.tableSelected = function(selection) {
@@ -108,8 +109,6 @@
 				return;
 			}
 			vm.activeTable = selection;
-			console.log('successfully executed table selection handling');
-			console.log(activeTable);
 		}
 	}
 	
