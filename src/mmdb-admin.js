@@ -119,12 +119,12 @@
 	function MmdbAdminSearchCtrl() {
 		var vm = this;
 		
-		vm.searchModes = ["id", "data"];
+		vm.searchModes = ['id', 'data'];
 		
 		vm.activeSearchMode = searchModes[0];
 		
 		vm.select = function(idx) {
-			vm selection = vm.searchModes[idx];
+			var selection = vm.searchModes[idx];
 			if (selection == vm.activeSearchMode) {
 				return;
 			}
