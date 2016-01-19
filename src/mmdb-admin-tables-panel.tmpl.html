@@ -1,7 +1,9 @@
 <div class="big-row panel panel-stacked panel-success">
     <div class="panel-body">
         <div class="row" ng-class="{spacer: $index > 0}" ng-repeat="table in mmdbAdminTables.tables">
-            <div class="col-md-12">{{table.sqlName}}</div>
+            <div class="col-md-12">
+                <button class="btn btn-block btn-default" ng-click="mmdbAdminTables.select($index)">{{table.sqlName}}</button>
+            </div>
         </div>
     </div>
 </div>
