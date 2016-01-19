@@ -121,7 +121,7 @@
 		
 		vm.searchModes = ['id', 'data'];
 		
-		vm.activeSearchMode = searchModes[0];
+		vm.activeSearchMode = vm.searchModes[0];
 		
 		vm.select = function(idx) {
 			var selection = vm.searchModes[idx];
