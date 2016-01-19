@@ -24,10 +24,26 @@
 			}
 		} );
 	} )
+	
+	.directive('mmdbAdminStatusPanel', function(){
+		return {
+			restrict: 'E',
+			templateUrl:'mmdb-admin-status-panel.tmpl.html',
+			scope: {
+				activeTable: '@'
+			},
+			controller: 'MmdbAdminStatusCtrl',
+			controllerAs: 'mmdbAdminStatus',
+			bindToController: true,
+			transclude: true
+		}
+	})
 
 	.factory( 'MmdbAdmin', [ 'SCHEMA', MmdbAdmin ] )
 
-	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] );
+	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] )
+
+	.controller( 'MmdbAdminStatusCtrl', [ MmdbAdminStatusCtrl ] );
 
 	function MmdbAdmin(schema) {
 		return {
@@ -39,6 +55,10 @@
 		var vm = this;
 		
 		vm.schema = mmdbAdminConfig.schema;
+	}
+	
+	function MmdbAdminStatusCtrl() {
+		var vm = this;
 	}
 
 	@@templateCache
