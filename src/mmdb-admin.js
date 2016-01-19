@@ -30,7 +30,7 @@
 			restrict: 'E',
 			templateUrl:'mmdb-admin-tool-panel.tmpl.html',
 			scope: {
-				activeTable: '=',
+				activeTable: '@',
 				schemaName: '@'
 			},
 			controller: 'MmdbAdminToolCtrl',
@@ -100,6 +100,7 @@
 		var vm = this;
 		
 		vm.schema = mmdbAdminConfig.schema;
+		vm.activeTable = vm.schema.tables[0];
 	}
 	
 	function MmdbAdminToolCtrl() {
