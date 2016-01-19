@@ -2,11 +2,11 @@
     <div class="row spacer">
         <div class="col-md-2">
 
-            <mmdb-admin-tool-panel schema-name="{{mmdbAdmin.schema.schemaName}}" active-table="{{mmdbAdmin.activeTable}}"></mmdb-admin-tool-panel>
+            <mmdb-admin-tool-panel schema-name="{{mmdbAdmin.schema.schemaName}}" active-table="mmdbAdmin.activeTable"></mmdb-admin-tool-panel>
 
             <mmdb-admin-search-panel></mmdb-admin-search-panel>
 
-            <mmdb-admin-tables-panel tables="mmdbAdmin.schema.tables"></mmdb-admin-tables-panel>
+            <mmdb-admin-tables-panel tables="mmdbAdmin.schema.tables" selection-made="mmdbAdmin.tableSelected"></mmdb-admin-tables-panel>
 
             <mmdb-admin-status-panel active-table="mmdbAdmin.activeTable">{{mmdbAdmin.schema.webBaseEndpoint}}</mmdb-admin-status-panel>
 

@@ -30,7 +30,7 @@
 			restrict: 'E',
 			templateUrl:'mmdb-admin-tool-panel.tmpl.html',
 			scope: {
-				activeTable: '@',
+				activeTable: '=',
 				schemaName: '@'
 			},
 			controller: 'MmdbAdminToolCtrl',
@@ -56,7 +56,8 @@
 			restrict: 'E',
 			templateUrl:'mmdb-admin-tables-panel.tmpl.html',
 			scope: {
-				tables: '='
+				tables: '=',
+				selectionMade: '&'
 			},
 			controller: 'MmdbAdminTablesCtrl',
 			controllerAs: 'mmdbAdminTables',
@@ -101,6 +102,16 @@
 		
 		vm.schema = mmdbAdminConfig.schema;
 		vm.activeTable = vm.schema.tables[0];
+		
+		vm.tableSelected = function(idx) {
+			var selection = vm.schema.tables[idx];
+			if (selection.sqlName == vm.activeTable.sqlName) {
+				return;
+			}
+			vm.activeTable = selection;
+			console.log('successfully executed table selection handling');
+			console.log(activeTable);
+		}
 	}
 	
 	function MmdbAdminToolCtrl() {
@@ -113,6 +124,10 @@
 	
 	function MmdbAdminTablesCtrl() {
 		var vm = this;
+		
+		vm.select = function(idx) {
+			vm.selectionMade()(vm.tables[idx]);
+		}
 	}
 	
 	function MmdbAdminStatusCtrl() {
