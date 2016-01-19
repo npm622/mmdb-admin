@@ -103,12 +103,7 @@
 		vm.schema = mmdbAdminConfig.schema;
 		vm.activeTable = vm.schema.tables[0];
 		
-		vm.tableSelected = function(idx) {
-		console.log('inside MmdbAdminCtrl#tableSelected, idx:');
-		console.log(idx);
-			var selection = vm.schema.tables[idx];
-			console.log('selection');
-			console.log(selection);
+		vm.tableSelected = function(selection) {
 			if (selection.sqlName == vm.activeTable.sqlName) {
 				return;
 			}
@@ -130,8 +125,6 @@
 		var vm = this;
 		
 		vm.select = function(idx) {
-			console.log('inside MmdbAdminTablesCtrl#select, idx:');
-			console.log(idx);
 			vm.selectionMade()(vm.tables[idx]);
 		}
 	}
