@@ -10,3 +10,11 @@ a:hover {
     border: 1px solid white;
     padding: 2px
 }
+
+.table-border-right {
+    border-right: 1px solid grey;
+}
+
+.table-border-left {
+    border-left: 1px solid grey;
+}

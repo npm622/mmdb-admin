@@ -11,8 +11,10 @@
     <tbody>
         <tr ng-repeat="dataRow in mmdbAdminDataTable.activeData()">
             <td><a ng-click="" class="btn btn-small btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
-            <td><a ng-click="" class="btn btn-small btn-info"><span class="glyphicon glyphicon-wrench"></span></a></td>
-            <td>{{dataRow.id}}</td>
+            <td class="table-border-right"><a ng-click="" class="btn btn-small btn-info"><span class="glyphicon glyphicon-wrench"></span></a></td>
+            <td ng-repeat="pk in mmdbAdminDataTable.activeTable.primaryKeys">{{dataRow[pk.javaName]}}</td>
+            <td ng-repeat="col in mmdbAdminDataTable.activeTable.baseColumns">{{dataRow[col.javaName]}}</td>
+            <td ng-repeat="blob in mmdbAdminDataTable.activeTable.blobColumns">{{dataRow[blob.javaName]}}</td>
             <td>{{dataRow.eggcorn}}</td>
         </tr>
     </tbody>
