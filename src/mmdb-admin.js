@@ -1,7 +1,7 @@
 (function() {
 	'use strict';
 
-	angular.module( 'mmdb.admin', [ 'ui.router' ] )
+	angular.module( 'mmdb.admin', [ 'ui.router', 'restangular' ] )
 
 	.provider( 'mmdbAdminConfig', function() {
 		this.setSchema = function(SCHEMA) {
@@ -91,7 +91,7 @@
 		}
 	} )
 
-	.factory( 'MmdbAdmin', [ 'SCHEMA', MmdbAdmin ] )
+	.factory( 'MmdbAdmin', [ 'SCHEMA', 'Restangular', MmdbAdmin ] )
 
 	.controller( 'MmdbAdminCtrl', [ 'mmdbAdminConfig', 'MmdbAdmin', MmdbAdminCtrl ] )
 
@@ -105,45 +105,20 @@
 
 	.controller( 'MmdbAdminDataTableCtrl', [ 'MmdbAdmin', MmdbAdminDataTableCtrl ] );
 
-	function MmdbAdmin(schema) {
-		var eggcorns = [ {
-			id : '1',
-			eggcorn : 'dummy data 1'
-		}, {
-			id : '2',
-			eggcorn : 'dummy data 2'
-		}, {
-			id : '3',
-			eggcorn : 'dummy data 3'
-		}, {
-			id : '4',
-			eggcorn : 'dummy data 4'
-		}, {
-			id : '5',
-			eggcorn : 'dummy data 5'
-		} ];
-		
-		var complexEggcorns = [ {
-			id : '1',
-			eggcorn : 'dummy data 1'
-		}, {
-			id : '2',
-			eggcorn : 'dummy data 2'
-		}, {
-			id : '3',
-			eggcorn : 'dummy data 3'
-		} ];
+	function MmdbAdmin(SCHEMA, Restangular) {
+		var eggcorns = Restangular.all('eggcorn');
+		var complexEggcorns = Restangular.all('complexEggcorn');
 		
 		return {
-			schema : schema,
+			schema : SCHEMA,
 			eggcorns : eggcorns,
 			complexEggcorns : complexEggcorns,
 			activeTableData : function(activeTable) {
 				switch ( activeTable.sqlName ) {
 				case 'eggcorn':
-					return eggcorns;
+					return eggcorns.getList().$object;
 				case 'complex_eggcorn':
-					return complexEggcorns;
+					return complexEggcorns.getList().$object;
 				default:
 					return [];
 				}
