@@ -106,23 +106,13 @@
 	.controller( 'MmdbAdminDataTableCtrl', [ 'MmdbAdmin', MmdbAdminDataTableCtrl ] );
 
 	function MmdbAdmin(SCHEMA, Restangular) {
-		var eggcorns = Restangular.all('eggcorn');
-		var complexEggcorns = Restangular.all('complexEggcorn');
-		
+		var eggcorns = Restangular.all( 'eggcorn' );
+		var complexEggcorns = Restangular.all( 'complexEggcorn' );
+
 		return {
 			schema : SCHEMA,
-			eggcorns : eggcorns,
-			complexEggcorns : complexEggcorns,
-			activeTableData : function(activeTable) {
-				switch ( activeTable.sqlName ) {
-				case 'eggcorn':
-					return eggcorns.getList().$object;
-				case 'complex_eggcorn':
-					return complexEggcorns.getList().$object;
-				default:
-					return [];
-				}
-			}
+			eggcorns : eggcorns.getList().$object,
+			complexEggcorns : complexEggcorns.getList().$object
 		}
 	}
 
@@ -179,9 +169,16 @@
 		console.log( vm.activeTable );
 
 		vm.activeData = function() {
-			return MmdbAdmin.activeTableData( vm.activeTable );
+			switch ( vm.activeTable.sqlName ) {
+			case 'eggcorn':
+				return MmdbAdmin.eggcorns;
+			case 'complex_eggcorn':
+				return MmdbAdmin.complexEggcorns;
+			default:
+				return [];
+			}
 		};
 	}
 
-	@@templateCache
+	 @@templateCache
 }());
