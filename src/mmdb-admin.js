@@ -106,34 +106,38 @@
 	.controller( 'MmdbAdminDataTableCtrl', [ 'MmdbAdmin', MmdbAdminDataTableCtrl ] );
 
 	function MmdbAdmin(schema) {
+		var eggcorns = [ {
+			id : '1',
+			eggcorn : 'dummy data 1'
+		}, {
+			id : '2',
+			eggcorn : 'dummy data 2'
+		}, {
+			id : '3',
+			eggcorn : 'dummy data 3'
+		}, {
+			id : '4',
+			eggcorn : 'dummy data 4'
+		}, {
+			id : '5',
+			eggcorn : 'dummy data 5'
+		} ];
+		
+		var complexCggcorns = [ {
+			id : '1',
+			eggcorn : 'dummy data 1'
+		}, {
+			id : '2',
+			eggcorn : 'dummy data 2'
+		}, {
+			id : '3',
+			eggcorn : 'dummy data 3'
+		} ];
+		
 		return {
 			schema : schema,
-			eggcorns : [ {
-				id : '1',
-				eggcorn : 'dummy data 1'
-			}, {
-				id : '2',
-				eggcorn : 'dummy data 2'
-			}, {
-				id : '3',
-				eggcorn : 'dummy data 3'
-			}, {
-				id : '4',
-				eggcorn : 'dummy data 4'
-			}, {
-				id : '5',
-				eggcorn : 'dummy data 5'
-			} ],
-			complexCggcorns : [ {
-				id : '1',
-				eggcorn : 'dummy data 1'
-			}, {
-				id : '2',
-				eggcorn : 'dummy data 2'
-			}, {
-				id : '3',
-				eggcorn : 'dummy data 3'
-			} ],
+			eggcorns : eggcorns,
+			complexCggcorns : complexEggcorns,
 			activeTableData : function(activeTable) {
 				switch ( activeTable.sqlName ) {
 				case 'eggcorn':
@@ -201,7 +205,7 @@
 
 		vm.activeData = function() {
 			return MmdbAdmin.activeTableData( vm.activeTable );
-		}
+		};
 	}
 
 	@@templateCache
