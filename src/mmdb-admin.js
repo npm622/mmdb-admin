@@ -123,7 +123,7 @@
 			eggcorn : 'dummy data 5'
 		} ];
 		
-		var complexCggcorns = [ {
+		var complexEggcorns = [ {
 			id : '1',
 			eggcorn : 'dummy data 1'
 		}, {
@@ -137,7 +137,7 @@
 		return {
 			schema : schema,
 			eggcorns : eggcorns,
-			complexCggcorns : complexEggcorns,
+			complexEggcorns : complexEggcorns,
 			activeTableData : function(activeTable) {
 				switch ( activeTable.sqlName ) {
 				case 'eggcorn':

@@ -9,10 +9,11 @@
         </tr>
     </thead>
     <tbody>
-        <tr>
+        <tr ng-repeat="dataRow in mmdbAdminDataTable.activeData()">
             <td><a ng-click="" class="btn btn-small btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
             <td><a ng-click="" class="btn btn-small btn-info"><span class="glyphicon glyphicon-wrench"></span></a></td>
-            <td ng-repeat="dataRow in mmdbAdminDataTable.activeData()">{{dataRow}}</td>
+            <td>{{dataRow.id}}</td>
+            <td>{{dataRow.eggcorn}}</td>
         </tr>
     </tbody>
 </table>
