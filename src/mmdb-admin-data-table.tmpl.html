@@ -1,0 +1,18 @@
+<table class="table table-striped table-bordered table-hover table-sm">
+    <thead>
+        <tr>
+            <th class="col-md-1"></th>
+            <th class="col-md-1"></th>
+            <th class="col-md-4" ng-repeat="pk in mmdbAdminDataTable.activeTable.primaryKeys">{{pk.sqlName}}</th>
+            <th class="col-md-5" ng-repeat="col in mmdbAdminDataTable.activeTable.baseColumns">{{col.sqlName}}</th>
+            <th class="col-md-1" ng-repeat="blob in mmdbAdminDataTable.activeTable.blobColumns">{{blob.sqlName}}</th>
+        </tr>
+    </thead>
+    <tbody>
+        <tr>
+            <td><a ng-click="" class="btn btn-small btn-danger"><span class="glyphicon glyphicon-remove-sign"></span></a></td>
+            <td><a ng-click="" class="btn btn-small btn-info"><span class="glyphicon glyphicon-wrench"></span></a></td>
+            <td ng-repeat="dataRow in mmdbAdminDataTable.activeData">{{dataRow}}</td>
+        </tr>
+    </tbody>
+</table>
