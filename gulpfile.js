@@ -10,7 +10,7 @@ var config = {
 	bowerDir : 'bower_components',
 	directiveJs : pkg.name + '.js',
 	directiveCss : pkg.name + '.css',
-	htmltemplates : 'src/**/*.tmpl.html',
+	htmltemplates : 'src/**.tmpl.html',
 	templateCache : {
 		tmpDir : 'tmp/',
 		file : 'tmpls.tmp',

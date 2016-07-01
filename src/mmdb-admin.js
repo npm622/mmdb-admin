@@ -3,7 +3,7 @@
 
     angular.module( 'mmdb.admin', [ 'ui.bootstrap', 'ui.router' ] )
 
-    .provider( 'mmdbAdminProvider', function() {
+    .provider( 'mmdbAdmin', function() {
         var vm = this;
 
         vm.setJson = function( json ) {
@@ -18,7 +18,7 @@
     .config( function config( $stateProvider ) {
         $stateProvider.state( 'mmdbAdmin', {
             url : '/mmdb-admin',
-            tmeplate : '<dashboard></dashboard>',
+            tmeplate : '<p class="poc">hello.</p><dashboard></dashboard>',
             data : {
                 pageTitle : 'mmdb admin'
             }
@@ -48,6 +48,8 @@
         vm.schema = Admin.schema;
 
         console.log( 'controller' );
-        console.log( Admin.schema )
+        console.log( Admin.schema );
     }
+
+    @@templateCache
 } )();
