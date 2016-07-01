@@ -62,5 +62,5 @@
         vm.schema = Admin.schema;
     }
 
-    // @@templateCache
+     @@templateCache
 } )();
