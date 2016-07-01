@@ -6,6 +6,10 @@
     .provider( 'mmdbAdmin', function() {
         var vm = this;
 
+        vm.$get = function() {
+            return this;
+        };
+
         vm.setJson = function( json ) {
             vm.json = json;
         };
@@ -13,10 +17,6 @@
         vm.searchModes = {
             ALL : 'all',
             PK : 'pk'
-        };
-
-        vm.$get = function() {
-            return this;
         };
     } )
 
@@ -46,6 +46,8 @@
         var vm = this;
 
         vm.schema = tableMapper.schema;
+
+        console.log( vm.schema );
 
         tableMapper.fetchByPk( vm.schema.tables[4], {
             customerId : "02de345a-72df-4677-be12-b867c58d9b51",
@@ -129,4 +131,4 @@
     }
 } )();
 
-(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-3\">\n            <div class=\"row\">\n                <p>sidebar</p>\n            </div>\n        </div>\n        <div class=\"col-md-9\">\n            <div class=\"row\">\n                <p>main panel</p>\n            </div>\n        </div>\n    </div>\n    <div class=\"panel panel-success panel-inverse panel-admin\">\n        <pre>{{$ctrl.schema | json}}</pre>\n    </div>\n</div>");}]);})();
+(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-2 panel-dashboard-side\">\n            <div class=\"row\">\n                <p>sidebar</p>\n            </div>\n        </div>\n        <div class=\"col-md-10 panel-dashboard-main\">\n            <div class=\"row\">\n                <p>main panel</p>\n            </div>\n        </div>\n    </div>\n</div>");}]);})();

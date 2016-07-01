@@ -6,6 +6,10 @@
     .provider( 'mmdbAdmin', function() {
         var vm = this;
 
+        vm.$get = function() {
+            return this;
+        };
+
         vm.setJson = function( json ) {
             vm.json = json;
         };
@@ -13,10 +17,6 @@
         vm.searchModes = {
             ALL : 'all',
             PK : 'pk'
-        };
-
-        vm.$get = function() {
-            return this;
         };
     } )
 
