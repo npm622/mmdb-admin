@@ -25,7 +25,7 @@
         } );
     } )
 
-    .factory( 'MmdbAdmin', [ '$http', 'mmdbAdminProvider', MmdbAdmin ] )
+    .factory( 'MmdbAdmin', [ '$http', 'mmdbAdmin', MmdbAdmin ] )
 
     .component( 'dashboard', {
         templateUrl : 'dashboard.tmpl.html',
@@ -33,12 +33,12 @@
         controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
 
-    function MmdbAdmin( $http, mmdbAdminProvider ) {
+    function MmdbAdmin( $http, mmdbAdmin ) {
         console.log( 'factory' );
-        console.log( mmdbAdminProvider.json );
+        console.log( mmdbAdmin.json );
 
         return {
-            schema : mmdbAdminProvider.json
+            schema : mmdbAdmin.json
         };
     }
 
@@ -51,5 +51,5 @@
         console.log( Admin.schema );
     }
 
-    angular.module("mmdb.admin").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.tmpl.html","<div class=\"container\">\n    <div class=\"panel panel-success panel-inverse panel-admin\">\n        <p>{{$ctrl.schema | json}}</p>\n    </div>\n</div>");}]);
+    angular.module("mmdb.admin").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.tmpl.html","<div class=\"container\">\n    <div class=\"panel panel-success panel-inverse panel-admin\">\n        <pre>{{$ctrl.schema | json}}</pre>\n    </div>\n</div>");}]);
 } )();

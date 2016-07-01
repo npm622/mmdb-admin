@@ -25,7 +25,7 @@
         } );
     } )
 
-    .factory( 'MmdbAdmin', [ '$http', 'mmdbAdminProvider', MmdbAdmin ] )
+    .factory( 'MmdbAdmin', [ '$http', 'mmdbAdmin', MmdbAdmin ] )
 
     .component( 'dashboard', {
         templateUrl : 'dashboard.tmpl.html',
@@ -33,12 +33,12 @@
         controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
 
-    function MmdbAdmin( $http, mmdbAdminProvider ) {
+    function MmdbAdmin( $http, mmdbAdmin ) {
         console.log( 'factory' );
-        console.log( mmdbAdminProvider.json );
+        console.log( mmdbAdmin.json );
 
         return {
-            schema : mmdbAdminProvider.json
+            schema : mmdbAdmin.json
         };
     }
 
