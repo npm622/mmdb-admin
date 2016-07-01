@@ -33,7 +33,7 @@
     .factory( 'MmdbAdmin', [ '$http', '$q', 'mmdbAdmin', MmdbAdmin ] )
 
     .component( 'dashboard', {
-        templateUrl : 'dashboard.tmpl.html',
+        templateUrl : 'components/dashboard/dashboard.html',
         bindings : {},
         controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
