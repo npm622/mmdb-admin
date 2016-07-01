@@ -1,20 +1,4 @@
-.panel-stacked {
-    margin-bottom: 0px;
-}
-
-.spacer {
-    margin-top: 15px;
-}
-
-a:hover {
-    border: 1px solid white;
-    padding: 2px
-}
-
-.table-border-right {
-    border-right: 1px solid grey;
-}
-
-.table-border-left {
-    border-left: 1px solid grey;
+.panel-admin {
+    margin: 10px;
+    padding: 20px;
 }
