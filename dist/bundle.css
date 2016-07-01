@@ -1,11 +1,13 @@
-.panel-dasbhaord-side {
-    height: 100%;
-    border: blue;
-    padding: 10px;
+.col-md-2.no-float, .col-md-10.no-float {
+    float: none; /* thanks baxabbit */
 }
 
-.panel-dasbhaord-main {
-    height: 100%;
-    border: green;
-    padding: 10px;
+.dashboard-side {
+    display: table-cell;
+    background: blue;
+}
+
+.dashboard-main {
+    display: table-cell;
+    background: green;
 }

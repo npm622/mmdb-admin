@@ -47,8 +47,6 @@
 
         vm.schema = tableMapper.schema;
 
-        console.log( vm.schema );
-
         tableMapper.fetchByPk( vm.schema.tables[4], {
             customerId : "02de345a-72df-4677-be12-b867c58d9b51",
             sandwichId : "2cb6d513-06a3-4aa4-93bb-e53d279d95cb"
@@ -131,4 +129,4 @@
     }
 } )();
 
-(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-2 panel-dashboard-side\">\n            <div class=\"row\">\n                <p>sidebar</p>\n            </div>\n        </div>\n        <div class=\"col-md-10 panel-dashboard-main\">\n            <div class=\"row\">\n                <p>main panel</p>\n            </div>\n        </div>\n    </div>\n</div>");}]);})();
+(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"col-md-2 no-float panel-dashboard-side\">\n    <div class=\"row\">\n        <p>sidebar</p>\n    </div>\n</div>\n<div class=\"col-md-10 no-float panel-dashboard-main\">\n    <div class=\"row\">\n        <p>main panel</p>\n    </div>\n</div>\n");}]);})();
