@@ -13,5 +13,10 @@
         var vm = this;
 
         vm.schema = tableMapper.schema;
+
+        tableMapper.fetchAll( vm.schema.tables[0] ).then( function( results ) {
+            console.log( results );
+        }, function() {
+        } );
     }
 } )();
