@@ -18,7 +18,7 @@
     .config( function config( $stateProvider ) {
         $stateProvider.state( 'mmdbAdmin', {
             url : '/mmdb-admin',
-            tmeplate : '<p class="poc">hello.</p><dashboard></dashboard>',
+            template : '<p class="poc">hello.</p><dashboard></dashboard>',
             data : {
                 pageTitle : 'mmdb admin'
             }
@@ -28,9 +28,9 @@
     .factory( 'MmdbAdmin', [ '$http', 'mmdbAdminProvider', MmdbAdmin ] )
 
     .component( 'dashboard', {
-        tempmlateUrl : 'dashboard.tmpl.html',
+        templateUrl : 'dashboard.tmpl.html',
         bindings : {},
-        controller : [ 'MmdbAdmin', 'DashboardCtrl' ]
+        controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
 
     function MmdbAdmin( $http, mmdbAdminProvider ) {
