@@ -18,14 +18,14 @@
     .config( function config( $stateProvider ) {
         $stateProvider.state( 'mmdbAdmin', {
             url : '/mmdb-admin',
-            template : '<p class="poc">hello.</p><dashboard></dashboard>',
+            template : '<dashboard></dashboard>',
             data : {
                 pageTitle : 'mmdb admin'
             }
         } );
     } )
 
-    .factory( 'MmdbAdmin', [ '$http', 'mmdbAdmin', MmdbAdmin ] )
+    .factory( 'MmdbAdmin', [ '$http', '$q', 'mmdbAdmin', MmdbAdmin ] )
 
     .component( 'dashboard', {
         templateUrl : 'dashboard.tmpl.html',
@@ -33,23 +33,34 @@
         controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
 
-    function MmdbAdmin( $http, mmdbAdmin ) {
-        console.log( 'factory' );
-        console.log( mmdbAdmin.json );
+    function MmdbAdmin( $http, $q, provider ) {
+        var schema = provider.json;
 
         return {
-            schema : mmdbAdmin.json
+            schema : schema,
+            fetchAll : function( table ) {
+                return handlePromiseDelivery( $http.get( schema.webEndpoint + '/' + table.contextPath ) );
+            }
         };
+
+        function handlePromiseDelivery( promise ) {
+            var deferred = $q.defer();
+
+            promise.then( function( response ) {
+                deferred.resolve( response.data );
+            }, function() {
+                deferred.reject();
+            } );
+
+            return deferred.promise;
+        }
     }
 
     function DashboardCtrl( Admin ) {
         var vm = this;
 
         vm.schema = Admin.schema;
-
-        console.log( 'controller' );
-        console.log( Admin.schema );
     }
 
-    @@templateCache
+    // @@templateCache
 } )();
