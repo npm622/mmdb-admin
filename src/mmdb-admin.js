@@ -10,7 +10,12 @@
             vm.json = json;
         };
 
-        this.$get = function() {
+        vm.searchModes = {
+            ALL : 'all',
+            PK : 'pk'
+        };
+
+        vm.$get = function() {
             return this;
         };
     } )
