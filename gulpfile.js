@@ -4,7 +4,6 @@ var bower = require( 'gulp-bower' );
 var concat = require( 'gulp-concat' );
 var debug = require( 'gulp-debug' );
 var gulp = require( 'gulp' );
-var iife = require( "gulp-iife" );
 // var sourcemaps = require( 'gulp-sourcemaps' );
 var templates = require( 'gulp-angular-templatecache' );
 
@@ -13,8 +12,8 @@ var templateCache = {
     filename : 'templates.js',
     options : {
         module : 'mmdb.admin.templates',
-        root : '',
-        standAlone : false
+        standalone : true,
+        moduleSystem : 'IIFE'
     }
 };
 
@@ -50,10 +49,7 @@ gulp.task( 'bower', function() {
 gulp.task( 'templates', [ 'bower' ], function() {
     return gulp.src( html.src ).pipe( debug( {
         title : 'html:'
-    } ) ).pipe( templates( templateCache.filename, templateCache.options ) ).pipe( iife( {
-        useStrict : false,
-        prependSemicolon : false
-    } ) ).pipe( gulp.dest( templateCache.path ) );
+    } ) ).pipe( templates( templateCache.filename, templateCache.options ) ).pipe( gulp.dest( templateCache.path ) );
 } );
 
 gulp.task( 'js', [ 'templates' ], function() {
