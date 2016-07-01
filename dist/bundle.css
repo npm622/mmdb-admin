@@ -1,13 +1,17 @@
-.col-md-2.no-float, .col-md-10.no-float {
-    float: none; /* thanks baxabbit */
+dashboard {
+    height: 100%;
+    width: 100%;
+    display: table;
 }
 
 .dashboard-side {
     display: table-cell;
-    background: blue;
+    height: 100%;
+    width: 20%;
 }
 
 .dashboard-main {
     display: table-cell;
-    background: green;
+    height: 100%;
+    width: 80%;
 }
