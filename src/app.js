@@ -28,42 +28,5 @@
                 pageTitle : 'mmdb admin'
             }
         } );
-    } )
-
-    .factory( 'MmdbAdmin', [ '$http', '$q', 'mmdbAdmin', MmdbAdmin ] )
-
-    .component( 'dashboard', {
-        templateUrl : 'components/dashboard/dashboard.html',
-        bindings : {},
-        controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
-
-    function MmdbAdmin( $http, $q, provider ) {
-        var schema = provider.json;
-
-        return {
-            schema : schema,
-            fetchAll : function( table ) {
-                return handlePromiseDelivery( $http.get( schema.webEndpoint + '/' + table.contextPath ) );
-            }
-        };
-
-        function handlePromiseDelivery( promise ) {
-            var deferred = $q.defer();
-
-            promise.then( function( response ) {
-                deferred.resolve( response.data );
-            }, function() {
-                deferred.reject();
-            } );
-
-            return deferred.promise;
-        }
-    }
-
-    function DashboardCtrl( Admin ) {
-        var vm = this;
-
-        vm.schema = Admin.schema;
-    }
 } )();

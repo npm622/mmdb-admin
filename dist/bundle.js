@@ -28,17 +28,17 @@
                 pageTitle : 'mmdb admin'
             }
         } );
-    } )
-
-    .factory( 'MmdbAdmin', [ '$http', '$q', 'mmdbAdmin', MmdbAdmin ] )
-
-    .component( 'dashboard', {
-        templateUrl : 'components/dashboard/dashboard.html',
-        bindings : {},
-        controller : [ 'MmdbAdmin', DashboardCtrl ]
     } );
+} )();
 
-    function MmdbAdmin( $http, $q, provider ) {
+( function() {
+    'use strict';
+
+    angular.module( 'mmdb.admin' )
+
+    .factory( 'tableMapper', [ '$http', '$q', 'mmdbAdmin', tableMapper ] )
+
+    function tableMapper( $http, $q, provider ) {
         var schema = provider.json;
 
         return {
@@ -60,11 +60,23 @@
             return deferred.promise;
         }
     }
+} )();
 
-    function DashboardCtrl( Admin ) {
+( function() {
+    'use strict';
+
+    angular.module( 'mmdb.admin' )
+
+    .component( 'dashboard', {
+        templateUrl : 'components/dashboard/dashboard.html',
+        bindings : {},
+        controller : [ 'tableMapper', DashboardCtrl ]
+    } );
+
+    function DashboardCtrl( tableMapper ) {
         var vm = this;
 
-        vm.schema = Admin.schema;
+        vm.schema = tableMapper.schema;
     }
 } )();
 
