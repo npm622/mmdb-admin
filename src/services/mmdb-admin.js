@@ -17,27 +17,44 @@
                 if ( table.isSimplePk ) {
                     return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath + '/' + pk ) );
                 } else {
-                    var params = {};
-                    for ( var i = 0; i < table.pks.length; i++ ) {
-                        var name = table.pks[i];
-                        params[name] = pk[name];
-                    }
-
-                    return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath + '/pk' ), {
-                        params : params
-                    } );
+                    return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath + '/pk', {
+                        params : buildRequestParams( table, pk )
+                    } ) );
                 }
             },
             findTable : function( sqlName ) {
-                for ( var i = 0; i < schema.tables.length; i++ ) {
-                    var table = schema.tables[i];
-                    if ( table.sqlName === sqlName ) {
-                        return table;
-                    }
-                }
-                return undefined;
+                return findTableByName( sqlName );
             }
         };
+
+        function buildRequestParams( table, pk ) {
+            var params = {};
+            for ( var i = 0; i < table.pks.length; i++ ) {
+                var name = convertSqlColumnToFieldName( table, table.pks[i] );
+                params[name] = pk[name];
+            }
+            return params;
+        }
+
+        function convertSqlColumnToFieldName( table, columnName ) {
+            for ( var i = 0; i < table.columns.length; i++ ) {
+                var column = table.columns[i];
+                if ( column.sqlName === columnName ) {
+                    return column.fieldName;
+                }
+            }
+            return undefined;
+        }
+
+        function findTableByName( sqlName ) {
+            for ( var i = 0; i < schema.tables.length; i++ ) {
+                var table = schema.tables[i];
+                if ( table.sqlName === sqlName ) {
+                    return table;
+                }
+            }
+            return undefined;
+        }
 
         function customPromise( promise ) {
             var deferred = $q.defer();
