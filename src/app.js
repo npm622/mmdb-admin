@@ -1,7 +1,7 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin', [ 'ui.bootstrap', 'ui.router' ] )
+    angular.module( 'mmdb.admin', [ 'mmdb.admin.templates', 'ui.bootstrap', 'ui.router' ] )
 
     .provider( 'mmdbAdmin', function() {
         var vm = this;
@@ -10,7 +10,12 @@
             vm.json = json;
         };
 
-        this.$get = function() {
+        vm.searchModes = {
+            ALL : 'all',
+            PK : 'pk'
+        };
+
+        vm.$get = function() {
             return this;
         };
     } )
@@ -61,6 +66,4 @@
 
         vm.schema = Admin.schema;
     }
-
-     angular.module("mmdb.admin").run(["$templateCache", function($templateCache) {$templateCache.put("dashboard.tmpl.html","<div class=\"container\">\n    <div class=\"row\">\n        <div class=\"col-md-3\">\n            <div class=\"row\">\n                <p>sidebar</p>\n            </div>\n        </div>\n        <div class=\"col-md-9\">\n            <div class=\"row\">\n                <p>main panel</p>\n            </div>\n        </div>\n    </div>\n    <div class=\"panel panel-success panel-inverse panel-admin\">\n        <pre>{{$ctrl.schema | json}}</pre>\n    </div>\n</div>");}]);
 } )();

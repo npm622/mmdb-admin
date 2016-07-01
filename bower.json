@@ -2,8 +2,8 @@
    "name":"mmdb-admin",
    "description":"angular toolbar directive that allows a brand and list of views",
    "main":[  
-      "dist/js/mmdb-admin.js",
-      "dist/css/mmdb-admin.css"
+      "dist/bundle.js",
+      "dist/bundle.css"
    ],
    "moduleType":[],
    "license":"MIT",
