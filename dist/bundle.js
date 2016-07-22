@@ -46,13 +46,22 @@
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
         bindings : {},
-        controller : [ 'tableMapper', DashboardCtrl ]
-    } );
+        controller : [ 'tableMapper', 'Dashboard', DashboardCtrl ]
+    } )
+
+    .factory( 'Dashboard', [ 'mmdbAdminConfig', Dashboard ] );
 
     function DashboardCtrl( tableMapper ) {
         var vm = this;
 
         vm.schema = tableMapper.schema;
+        vm.activeTable = vm.schema.tables[0];
+
+        vm.currentTableName = function() {
+            if ( vm.activeTable ) {
+                return vm.activeTable.displayName;
+            }
+        }
 
         tableMapper.fetchByPk( vm.schema.tables[4], {
             customerId : "02de345a-72df-4677-be12-b867c58d9b51",
@@ -136,4 +145,4 @@
     }
 } )();
 
-(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"dashboard-wrapper\">\n    <div class=\"col-md-1 dashboard-sidebar-wrapper\">\n        <div class=\"dashboard-sidebar\">\n            <ul class=\"nav list-group\">\n                <li><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 1</a></li>\n                <li><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 2</a></li>\n                <li><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 9</a></li>\n                <li><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 10</a></li>\n                <li><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 11</a></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"col-md-11 pull-right dashboard-main-wrapper\">\n        <div class=\"dashboard-main\">\n            <div class=\"page-header\">\n                <h3>mmdb admin</h3>\n            </div>\n            <p>lorem ipsum dolor sit amet, consectetur adipiscing elit. praesent eget magna et ante suscipit lacinia. aenean porttitor velit id pretium\n                blandit.</p>\n        </div>\n\n        <div class=\"footer\">hand rolled by nick makes.</div>\n\n    </div>\n</div>");}]);})();
+(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"dashboard-wrapper\">\n    <div class=\"col-md-2 dashboard-sidebar-wrapper\">\n        <div class=\"dashboard-sidebar\">\n            <ul class=\"nav list-group\">\n                <li ng-repeat=\"table in $ctrl.schema.tables\"><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>{{table.displayName}}</a></li>\n            </ul>\n        </div>\n    </div>\n    <div class=\"col-md-10 pull-right dashboard-main-wrapper\">\n        <div class=\"dashboard-main\">\n            <div class=\"page-header\">\n                <h3>{{$ctrl.currentTableName()}}</h3>\n            </div>\n            <pre>{{$ctrl.activeTable : json}}</pre>\n        </div>\n\n        <div class=\"footer\">hand rolled by nick.</div>\n\n    </div>\n</div>");}]);})();
