@@ -7,9 +7,7 @@
         templateUrl : 'components/dashboard/dashboard.html',
         bindings : {},
         controller : [ 'tableMapper', DashboardCtrl ]
-    } )
-
-    .factory( 'Dashboard', [ 'mmdbAdminConfig' ] );
+    } );
 
     function DashboardCtrl( tableMapper ) {
         var vm = this;
