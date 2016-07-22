@@ -9,7 +9,7 @@
         controller : [ 'tableMapper', DashboardCtrl ]
     } )
 
-    .factory( 'Dashboard', [ 'mmdbAdminConfig', Dashboard ] );
+    .factory( 'Dashboard', [ 'mmdbAdminConfig' ] );
 
     function DashboardCtrl( tableMapper ) {
         var vm = this;
