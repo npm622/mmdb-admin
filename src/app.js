@@ -1,7 +1,7 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin', [ 'mmdb.admin.templates', 'ui.bootstrap', 'ui.router' ] )
+    angular.module( 'mmdb.admin', [ 'mmdb.admin.templates', 'ui.bootstrap' ] )
 
     .provider( 'mmdbAdmin', function() {
         var vm = this;

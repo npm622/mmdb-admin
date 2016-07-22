@@ -1,7 +1,7 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin', [ 'mmdb.admin.templates', 'ui.bootstrap', 'ui.router' ] )
+    angular.module( 'mmdb.admin', [ 'mmdb.admin.templates', 'ui.bootstrap' ] )
 
     .provider( 'mmdbAdmin', function() {
         var vm = this;
@@ -136,4 +136,4 @@
     }
 } )();
 
-(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"col-md-2 dashboard-side\">\n    <p>sidebar</p>\n</div>\n<div class=\"col-md-10 dashboard-main\">\n    <p>main panel</p>\n</div>\n");}]);})();
+(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"dashboard-wrapper\">\n  <div class=\"col-md-1 dashboard-sidebar-wrapper\">\n            <div class=\"dashboard-sidebar\">\n                <ul class=\"nav list-group\">\n                    <li>\n                        <a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 1</a>\n                    </li>\n                    <li>\n                        <a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 2</a>\n                    </li>\n                    <li>\n                        <a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 9</a>\n                    </li>\n                    <li>\n                        <a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 10</a>\n                    </li>\n                    <li>\n                        <a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>sidebar item 11</a>\n                    </li>\n                </ul>\n            </div>\n        </div>\n        <div class=\"col-md-11 pull-right dashboard-main-wrapper\">\n            <div class=\"dashboard-main\">\n              <div class=\"page-header\">\n                <h3>mmdb admin</h3>\n              </div>\n              <p>lorem ipsum dolor sit amet, consectetur adipiscing elit. praesent eget magna et ante suscipit lacinia. aenean porttitor velit id pretium blandit.</p>\n            </div>\n          \n            <div class=\"col-md-12 footer\">\n              <ul class=\"nav navbar-nav\"><li><a href=\"\">Link</a></li><li><a href=\"\">Link</a></li><li><a href=\"\">Link</a></li></ul>\n            </div>\n          \n        </div>\n</div>");}]);})();
