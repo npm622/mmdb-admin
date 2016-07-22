@@ -6,7 +6,7 @@
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
         bindings : {},
-        controller : [ 'tableMapper', 'Dashboard', DashboardCtrl ]
+        controller : [ 'tableMapper', DashboardCtrl ]
     } )
 
     .factory( 'Dashboard', [ 'mmdbAdminConfig', Dashboard ] );
