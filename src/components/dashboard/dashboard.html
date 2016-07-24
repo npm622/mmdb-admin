@@ -36,7 +36,7 @@
                                 <i class="fa fa-times-circle" aria-hidden="true"></i>
                             </button>
                         </td>
-                        <td ng-repeat="col in $ctrl.activeTable.columns">{{item[col.fieldName]}}</td>
+                        <td ng-repeat="col in $ctrl.activeTable.columns">{{$ctrl.itemValue(item, column)}}</td>
                     </tr>
                 </tbody>
             </table>
