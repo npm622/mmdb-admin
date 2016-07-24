@@ -66,11 +66,20 @@
             getItems();
         }
 
+        vm.itemValue = function( column ) {
+            if ( !vm.activeTable.isSimplePk && column.isPk ) {
+                return item[vm.activeTable.pkKey][column.fieldName];
+            } else {
+                return item[column.fieldName];
+            }
+        }
+
         function getItems() {
             vm.items = [];
 
             Table.fetchAll( vm.activeTable ).then( function( items ) {
                 vm.items = items;
+                console.log( vm.items );
             }, function() {
             } );
         }
