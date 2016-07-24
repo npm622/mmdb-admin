@@ -35,13 +35,16 @@
             getItems();
         }
 
-        vm.sortBy = function(col) {
-            if ( vm.sortExpression === col.sqlName ) {
+        vm.sortBy = function( col ) {
+            if ( vm.sortExpression === col.jsonPath ) {
                 vm.sortDirection = !vm.sortDirection;
             } else {
-                vm.sortExpression = col.sqlName;
+                vm.sortExpression = col.jsonPath;
                 vm.sortDirection = false;
             }
+            console.log( 'sorting by...' );
+            console.log( vm.sortExpression );
+            console.log( vm.filter );
         }
 
         vm.itemValue = function( item, column ) {
@@ -55,7 +58,7 @@
         function determineActiveTable() {
             return $location.search().table ? Schema.findTableByName( $location.search().table ) : vm.schema.tables[0];
         }
-        
+
         function setupSortAndSearch() {
             vm.filter = {};
             vm.sortExpression = vm.activeTable.defaultSortExpression;
