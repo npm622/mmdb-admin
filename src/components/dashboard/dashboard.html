@@ -3,7 +3,8 @@
         <div class="dashboard-sidebar">
 
             <ul class="nav list-group">
-                <li ng-repeat="table in $ctrl.schema.tables"><a class="list-group-item" href="#"><i class="icon-home icon-1x"></i>{{table.displayName}}</a></li>
+                <li ng-repeat="table in $ctrl.schema.tables"><a class="list-group-item" ng-click="$ctrl.switchTableView(table)"><i
+                        class="icon-home icon-1x"></i>{{table.displayName}}</a></li>
             </ul>
 
         </div>
@@ -12,10 +13,33 @@
         <div class="dashboard-main">
 
             <div class="page-header">
-                <h3>{{$ctrl.currentTableName()}}</h3>
+                <h3>{{$ctrl.activeTable.displayName}}</h3>
             </div>
 
-            <pre>{{$ctrl.activeTable | json}}</pre>
+            <table class="table table-striped table-hover table-sm">
+                <thead>
+                    <tr>
+                        <th></th>
+                        <th></th>
+                        <th ng-repeat="col in $ctrl.activeTable.columns">{{col.displayName}}</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr ng-repeat="item in $ctrl.items">
+                        <td>
+                            <button ng-click="$ctrl.updateItem(item)" class="btn btn-small btn-info">
+                                <i class="fa fa-wrench" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        <td>
+                            <button ng-click="$ctrl.deleteItem(item)" class="btn btn-small btn-danger">
+                                <i class="fa fa-times-circle" aria-hidden="true"></i>
+                            </button>
+                        </td>
+                        <td ng-repeat="col in $ctrl.activeTable.columns">{{item[col.fieldName]}}</td>
+                    </tr>
+                </tbody>
+            </table>
         </div>
 
         <div class="footer">hand rolled by nick.</div>

@@ -5,28 +5,34 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        bindings : {},
-        controller : [ 'tableMapper', DashboardCtrl ]
+        controller : [ 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( tableMapper ) {
+    function DashboardCtrl( Schema, Table ) {
         var vm = this;
 
-        vm.schema = tableMapper.schema;
+        vm.schema = Schema.json;
         vm.activeTable = vm.schema.tables[0];
 
-        vm.currentTableName = function() {
-            if ( vm.activeTable ) {
-                return vm.activeTable.displayName;
+        getItems();
+
+        vm.switchTableView = function( table ) {
+            if ( vm.activeTable.sqlName === table.sqlName ) {
+                return;
             }
+
+            vm.activeTable = table;
+
+            getItems();
         }
 
-        tableMapper.fetchByPk( vm.schema.tables[4], {
-            customerId : "02de345a-72df-4677-be12-b867c58d9b51",
-            sandwichId : "2cb6d513-06a3-4aa4-93bb-e53d279d95cb"
-        } ).then( function( results ) {
-            console.log( results );
-        }, function() {
-        } );
+        function getItems() {
+            vm.items = [];
+
+            Table.fetchAll( vm.activeTable ).then( function( items ) {
+                vm.items = items;
+            }, function() {
+            } );
+        }
     }
 } )();

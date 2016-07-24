@@ -45,29 +45,35 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        bindings : {},
-        controller : [ 'tableMapper', DashboardCtrl ]
+        controller : [ 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( tableMapper ) {
+    function DashboardCtrl( Schema, Table ) {
         var vm = this;
 
-        vm.schema = tableMapper.schema;
+        vm.schema = Schema.json;
         vm.activeTable = vm.schema.tables[0];
 
-        vm.currentTableName = function() {
-            if ( vm.activeTable ) {
-                return vm.activeTable.displayName;
+        getItems();
+
+        vm.switchTableView = function( table ) {
+            if ( vm.activeTable.sqlName === table.sqlName ) {
+                return;
             }
+
+            vm.activeTable = table;
+
+            getItems();
         }
 
-        tableMapper.fetchByPk( vm.schema.tables[4], {
-            customerId : "02de345a-72df-4677-be12-b867c58d9b51",
-            sandwichId : "2cb6d513-06a3-4aa4-93bb-e53d279d95cb"
-        } ).then( function( results ) {
-            console.log( results );
-        }, function() {
-        } );
+        function getItems() {
+            vm.items = [];
+
+            Table.fetchAll( vm.activeTable ).then( function( items ) {
+                vm.items = items;
+            }, function() {
+            } );
+        }
     }
 } )();
 
@@ -76,71 +82,54 @@
 
     angular.module( 'mmdb.admin' )
 
-    .factory( 'tableMapper', [ '$http', '$q', 'mmdbAdmin', tableMapper ] )
+    .factory( 'Schema', [ 'mmdbAdmin', Schema ] )
 
-    function tableMapper( $http, $q, provider ) {
-        var schema = provider.json;
+    function Schema( mmdbAdmin ) {
+        var json = mmdbAdmin.json;
 
         return {
-            schema : schema,
-            fetchAll : function( table ) {
-                return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath ) );
-            },
-            fetchByPk : function( table, pk ) {
-                if ( table.isSimplePk ) {
-                    return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath + '/' + pk ) );
-                } else {
-                    return customPromise( $http.get( schema.webEndpoint + '/' + table.contextPath + '/pk', {
-                        params : buildRequestParams( table, pk )
-                    } ) );
-                }
-            },
-            findTable : function( sqlName ) {
+            json : json,
+            findTableByName : function( sqlName ) {
                 return findTableByName( sqlName );
             }
         };
 
-        function buildRequestParams( table, pk ) {
-            var params = {};
-            for ( var i = 0; i < table.pks.length; i++ ) {
-                var name = convertSqlColumnToFieldName( table, table.pks[i] );
-                params[name] = pk[name];
-            }
-            return params;
-        }
-
-        function convertSqlColumnToFieldName( table, columnName ) {
-            for ( var i = 0; i < table.columns.length; i++ ) {
-                var column = table.columns[i];
-                if ( column.sqlName === columnName ) {
-                    return column.fieldName;
-                }
-            }
-            return undefined;
-        }
-
         function findTableByName( sqlName ) {
-            for ( var i = 0; i < schema.tables.length; i++ ) {
-                var table = schema.tables[i];
+            for ( var i = 0; i < json.tables.length; i++ ) {
+                var table = json.tables[i];
                 if ( table.sqlName === sqlName ) {
                     return table;
                 }
             }
             return undefined;
         }
-
-        function customPromise( promise ) {
-            var deferred = $q.defer();
-
-            promise.then( function( response ) {
-                deferred.resolve( response.data );
-            }, function() {
-                deferred.reject();
-            } );
-
-            return deferred.promise;
-        }
     }
 } )();
 
-(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"dashboard-wrapper\">\n    <div class=\"col-md-2 dashboard-sidebar-wrapper\">\n        <div class=\"dashboard-sidebar\">\n\n            <ul class=\"nav list-group\">\n                <li ng-repeat=\"table in $ctrl.schema.tables\"><a class=\"list-group-item\" href=\"#\"><i class=\"icon-home icon-1x\"></i>{{table.displayName}}</a></li>\n            </ul>\n\n        </div>\n    </div>\n    <div class=\"col-md-10 pull-right dashboard-main-wrapper\">\n        <div class=\"dashboard-main\">\n\n            <div class=\"page-header\">\n                <h3>{{$ctrl.currentTableName()}}</h3>\n            </div>\n\n            <pre>{{$ctrl.activeTable | json}}</pre>\n        </div>\n\n        <div class=\"footer\">hand rolled by nick.</div>\n    </div>\n</div>");}]);})();
+( function() {
+    'use strict';
+
+    angular.module( 'mmdb.admin' )
+
+    .factory( 'Table', [ '$http', '$q', 'mmdbAdmin', Table ] )
+
+    function Table( $http, $q, mmdbAdmin ) {
+        var webEndpoint = mmdbAdmin.schema.webEndpoint;
+
+        return {
+            fetchAll : function( table ) {
+                var deferred = $q.defer();
+
+                $http.get( webEndpoint + '/' + table.contextPath ).then( function( response ) {
+                    deferred.resolve( response.data );
+                }, function() {
+                    deferred.reject();
+                } );
+
+                return deferred.promise;
+            }
+        };
+    }
+} )();
+
+(function(){angular.module("mmdb.admin.templates", []).run(["$templateCache", function($templateCache) {$templateCache.put("components/dashboard/dashboard.html","<div class=\"dashboard-wrapper\">\n    <div class=\"col-md-2 dashboard-sidebar-wrapper\">\n        <div class=\"dashboard-sidebar\">\n\n            <ul class=\"nav list-group\">\n                <li ng-repeat=\"table in $ctrl.schema.tables\"><a class=\"list-group-item\" ng-click=\"$ctrl.switchTableView(table)\"><i\n                        class=\"icon-home icon-1x\"></i>{{table.displayName}}</a></li>\n            </ul>\n\n        </div>\n    </div>\n    <div class=\"col-md-10 pull-right dashboard-main-wrapper\">\n        <div class=\"dashboard-main\">\n\n            <div class=\"page-header\">\n                <h3>{{$ctrl.activeTable.displayName}}</h3>\n            </div>\n\n            <table class=\"table table-striped table-hover table-sm\">\n                <thead>\n                    <tr>\n                        <th></th>\n                        <th></th>\n                        <th ng-repeat=\"col in $ctrl.activeTable.columns\">{{col.displayName}}</th>\n                    </tr>\n                </thead>\n                <tbody>\n                    <tr ng-repeat=\"item in $ctrl.items\">\n                        <td>\n                            <button ng-click=\"$ctrl.updateItem(item)\" class=\"btn btn-small btn-info\">\n                                <i class=\"fa fa-wrench\" aria-hidden=\"true\"></i>\n                            </button>\n                        </td>\n                        <td>\n                            <button ng-click=\"$ctrl.deleteItem(item)\" class=\"btn btn-small btn-danger\">\n                                <i class=\"fa fa-times-circle\" aria-hidden=\"true\"></i>\n                            </button>\n                        </td>\n                        <td ng-repeat=\"col in $ctrl.activeTable.columns\">{{item[col.fieldName]}}</td>\n                    </tr>\n                </tbody>\n            </table>\n        </div>\n\n        <div class=\"footer\">hand rolled by nick.</div>\n    </div>\n</div>\n");}]);})();
