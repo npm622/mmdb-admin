@@ -111,10 +111,10 @@
 
     angular.module( 'mmdb.admin' )
 
-    .factory( 'Table', [ '$http', '$q', 'mmdbAdmin', Table ] )
+    .factory( 'Table', [ '$http', '$q', 'Schema', Table ] )
 
-    function Table( $http, $q, mmdbAdmin ) {
-        var webEndpoint = mmdbAdmin.schema.webEndpoint;
+    function Table( $http, $q, Schema ) {
+        var webEndpoint = Schema.json.webEndpoint;
 
         return {
             fetchAll : function( table ) {
