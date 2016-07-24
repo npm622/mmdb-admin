@@ -26,7 +26,7 @@
             getItems();
         }
 
-        vm.itemValue = function( column ) {
+        vm.itemValue = function( item, column ) {
             if ( !vm.activeTable.isSimplePk && column.isPk ) {
                 return item[vm.activeTable.pkKey][column.fieldName];
             } else {
