@@ -12,9 +12,17 @@
         var vm = this;
 
         vm.schema = Schema.json;
-        vm.activeTable = vm.schema.tables[0];
+        vm.activeTable = determineActiveTable();
+
+        vm.filter = {};
+        vm.sortExpression = vm.activeTable.defaultSortExpression;
+        vm.sortDirection = false;
 
         getItems();
+
+        vm.search = function() {
+            vm.filter.$ = vm.searchInput;
+        }
 
         vm.switchTableView = function( table ) {
             if ( vm.activeTable.sqlName === table.sqlName ) {
@@ -22,8 +30,20 @@
             }
 
             vm.activeTable = table;
+            $location.search( {
+                'table' : vm.activeTable.sqlName
+            } );
 
             getItems();
+        }
+
+        vm.sortBy = function(col) {
+            if ( vm.sortExpression === col.sqlName ) {
+                vm.sortDirection = !vm.sortDirection;
+            } else {
+                vm.sortExpression = col.sqlName;
+                vm.sortDirection = false;
+            }
         }
 
         vm.itemValue = function( item, column ) {
@@ -32,6 +52,10 @@
             } else {
                 return item[column.fieldName];
             }
+        }
+
+        function determineActiveTable() {
+            return $location.search().table ? Schema.findTableByName( $location.search().table ) : vm.schema.tables[0];
         }
 
         function getItems() {
