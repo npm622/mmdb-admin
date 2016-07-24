@@ -45,10 +45,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$location', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( Schema, Table ) {
+    function DashboardCtrl( $location, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
