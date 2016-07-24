@@ -14,10 +14,7 @@
         vm.schema = Schema.json;
         vm.activeTable = determineActiveTable();
 
-        vm.filter = {};
-        vm.sortExpression = vm.activeTable.defaultSortExpression;
-        vm.sortDirection = false;
-
+        setupSortAndSearch();
         getItems();
 
         vm.search = function() {
@@ -34,6 +31,7 @@
                 'table' : vm.activeTable.sqlName
             } );
 
+            setupSortAndSearch();
             getItems();
         }
 
@@ -56,6 +54,12 @@
 
         function determineActiveTable() {
             return $location.search().table ? Schema.findTableByName( $location.search().table ) : vm.schema.tables[0];
+        }
+        
+        function setupSortAndSearch() {
+            vm.filter = {};
+            vm.sortExpression = vm.activeTable.defaultSortExpression;
+            vm.sortDirection = false;
         }
 
         function getItems() {
