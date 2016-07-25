@@ -34,12 +34,14 @@
                 <tbody>
                     <tr ng-repeat="item in $ctrl.items | filter : $ctrl.filter | orderBy : $ctrl.sortExpression : $ctrl.sortDirection as filteredItems">
                         <td>
-                            <button ng-click="$ctrl.updateItem(item)" class="btn btn-small btn-info">
-                                <i class="fa fa-wrench fa-fw" aria-hidden="true"></i>
-                            </button>
-                            <button ng-click="$ctrl.deleteItem(item)" class="btn btn-small btn-danger">
-                                <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
-                            </button>
+                            <div class="btn-group btn-group-xs" role="group" aria-label="...">
+                                <button ng-click="$ctrl.updateItem(item)" class="btn btn-info">
+                                    <i class="fa fa-wrench fa-fw" aria-hidden="true"></i>
+                                </button>
+                                <button ng-click="$ctrl.deleteItem(item)" class="btn btn-danger">
+                                    <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
+                                </button>
+                            </div>
                         </td>
                         <td ng-repeat="col in $ctrl.activeTable.columns">{{$ctrl.itemValue(item, col)}}</td>
                     </tr>

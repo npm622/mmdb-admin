@@ -42,9 +42,6 @@
                 vm.sortExpression = col.jsonPath;
                 vm.sortDirection = false;
             }
-            console.log( 'sorting by...' );
-            console.log( vm.sortExpression );
-            console.log( vm.filter );
         }
 
         vm.itemValue = function( item, column ) {
