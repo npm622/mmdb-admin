@@ -33,7 +33,7 @@
                 </thead>
                 <tbody>
                     <tr ng-repeat="item in $ctrl.items | filter : $ctrl.filter | orderBy : $ctrl.sortExpression : $ctrl.sortDirection as filteredItems">
-                        <td>
+                        <td class="item-row-buttons">
                             <div class="btn-group btn-group-xs" role="group" aria-label="...">
                                 <button ng-click="$ctrl.updateItem(item)" class="btn btn-info">
                                     <i class="fa fa-wrench fa-fw" aria-hidden="true"></i>
