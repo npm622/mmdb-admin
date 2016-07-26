@@ -18,7 +18,7 @@ var templateCache = {
 };
 
 var js = {
-    src : [ 'src/app.js', 'src/components/**/*.js', 'src/services/**/*.js', templateCache.path + '/' + templateCache.filename ],
+    src : [ 'src/app.js', 'src/components/**/*.js', 'src/modals/**/*.js', 'src/services/**/*.js', templateCache.path + '/' + templateCache.filename ],
     lib : []
 };
 
