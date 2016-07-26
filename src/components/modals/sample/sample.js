@@ -3,33 +3,21 @@
 
     angular.module( 'mmdb.admin' )
 
-    .controller( 'SampleCtrl', [ '$uibModalInstance', 'items', SampleCtrl ] )
+    .controller( 'SampleCtrl', [ '$uibModalInstance', 'activeTable', SampleCtrl ] );
 
-    .component( 'addForm', {
-        templateUrl : 'modals/add-form/add-form.html',
-        controller : [ AddFormCtrl ]
-    } );
-
-    function SampleCtrl( $uibModalInstance, items ) {
+    function SampleCtrl( $uibModalInstance, activeTable ) {
         var vm = this;
 
-        vm.items = items;
-        vm.selected = {
-            item : vm.items[0]
-        };
+        vm.activeTable = activeTable;
+        vm.form = {};
 
         vm.ok = function() {
-            $uibModalInstance.close( vm.selected.item );
+            $uibModalInstance.close( angular.toJson( vm.form ) );
         };
 
         vm.cancel = function() {
             $uibModalInstance.dismiss( 'cancel' );
         };
-
-    }
-
-    function AddFormCtrl( $location, $uibModal, Schema, Table ) {
-        var vm = this;
 
     }
 } )();

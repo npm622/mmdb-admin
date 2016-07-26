@@ -59,20 +59,22 @@
 
             var modal = $uibModal.open( {
                 animation : true,
+                size : size,
                 templateUrl : 'modals/sample/sample.html',
                 controller : 'SampleCtrl',
-                size : size,
+                controllerAs : '$ctrl',
+                bindToController : true,
                 resolve : {
-                    items : function() {
-                        return [ 'one', 'two', 'three' ];
+                    activeTable : function() {
+                        vm.activeTable;
                     }
                 }
             } );
 
-            modal.result.then( function( selectedItem ) {
-                vm.selected = selectedItem;
+            modal.result.then( function( itemJson ) {
+                console.log( 'creating: ' + itemJson );
             }, function() {
-                $log.info( 'Modal dismissed at: ' + new Date() );
+                console.log( 'modal dismissed at: ' + new Date() );
             } );
         }
 
