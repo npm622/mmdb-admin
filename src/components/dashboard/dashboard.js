@@ -66,7 +66,7 @@
                 bindToController : true,
                 resolve : {
                     activeTable : function() {
-                        vm.activeTable;
+                        return vm.activeTable;
                     }
                 }
             } );

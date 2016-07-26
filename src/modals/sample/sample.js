@@ -11,6 +11,12 @@
         vm.activeTable = activeTable;
         vm.form = {};
 
+        vm.$onInit = function() {
+            console.log( 'on add form init...' );
+            console.log( vm.activeTable );
+            console.log( activeTable );
+        }
+
         vm.ok = function() {
             $uibModalInstance.close( angular.toJson( vm.form ) );
         };
