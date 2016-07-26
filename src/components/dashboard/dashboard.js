@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$location', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $location, Schema, Table ) {
+    function DashboardCtrl( $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -50,6 +50,30 @@
             } else {
                 return item[column.fieldName];
             }
+        }
+
+        vm.showAddForm = function( size ) {
+            if ( !size ) {
+                size = 'lg';
+            }
+
+            var modal = $uibModal.open( {
+                animation : true,
+                templateUrl : 'modals/sample/sample.html',
+                controller : 'SampleCtrl',
+                size : size,
+                resolve : {
+                    items : function() {
+                        return [ 'one', 'two', 'three' ];
+                    }
+                }
+            } );
+
+            modal.result.then( function( selectedItem ) {
+                vm.selected = selectedItem;
+            }, function() {
+                $log.info( 'Modal dismissed at: ' + new Date() );
+            } );
         }
 
         function determineActiveTable() {
