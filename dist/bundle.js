@@ -198,7 +198,7 @@
             var modal = $uibModal.open( {
                 animation : true,
                 size : 'lg',
-                templateUrl : 'modals/sample/sample.html',
+                templateUrl : 'modals/add-form/add-form.html',
                 controller : 'SampleCtrl',
                 controllerAs : '$ctrl',
                 bindToController : true,
@@ -257,9 +257,9 @@
 
     angular.module( 'mmdb.admin' )
 
-    .controller( 'SampleCtrl', [ '$uibModalInstance', 'activeTable', SampleCtrl ] );
+    .controller( 'AddFormCtrl', [ '$uibModalInstance', 'activeTable', AddFormCtrl ] );
 
-    function SampleCtrl( $uibModalInstance, activeTable ) {
+    function AddFormCtrl( $uibModalInstance, activeTable ) {
         var vm = this;
 
         vm.activeTable = activeTable;
@@ -289,6 +289,7 @@
 
     .component( 'deleteConfirm', {
         templateUrl : 'modals/delete-confirm/delete-confirm.html',
+        replace : true,
         require : {
             parent : '^dashboard'
         },

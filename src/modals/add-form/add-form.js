@@ -3,9 +3,9 @@
 
     angular.module( 'mmdb.admin' )
 
-    .controller( 'SampleCtrl', [ '$uibModalInstance', 'activeTable', SampleCtrl ] );
+    .controller( 'AddFormCtrl', [ '$uibModalInstance', 'activeTable', AddFormCtrl ] );
 
-    function SampleCtrl( $uibModalInstance, activeTable ) {
+    function AddFormCtrl( $uibModalInstance, activeTable ) {
         var vm = this;
 
         vm.activeTable = activeTable;

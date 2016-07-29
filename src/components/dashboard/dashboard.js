@@ -56,7 +56,7 @@
             var modal = $uibModal.open( {
                 animation : true,
                 size : 'lg',
-                templateUrl : 'modals/sample/sample.html',
+                templateUrl : 'modals/add-form/add-form.html',
                 controller : 'SampleCtrl',
                 controllerAs : '$ctrl',
                 bindToController : true,
