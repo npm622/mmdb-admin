@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$location', 'ModalService', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $location, ModalService, Schema, Table ) {
+    function DashboardCtrl( $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
