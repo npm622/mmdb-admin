@@ -1,0 +1,14 @@
+<div class="modal-header">
+    <h3 class="modal-title">add new: {{$ctrl.activeTable.displayName}}</h3>
+</div>
+<div class="modal-body">
+    <ul>
+        <li ng-repeat="col in $ctrl.activeTable.columns">{{col.fieldName}}</li>
+    </ul>
+    Form:
+    <pre>{{ $ctrl.form | json }}</pre>
+</div>
+<div class="modal-footer">
+    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">ok</button>
+    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">cancel</button>
+</div>

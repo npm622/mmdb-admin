@@ -4,11 +4,11 @@
     angular.module( 'mmdb.admin' )
 
     .component( 'dashboard', {
-        templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$location', 'ModalService', 'Schema', 'Table', DashboardCtrl ]
+        templateUrl : 'components/add-form-modal/add-form-modal.html',
+        controller : [ '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $location, ModalService, Schema, Table ) {
+    function DashboardCtrl( $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -52,10 +52,14 @@
             }
         }
 
-        vm.showAddForm = function() {
+        vm.showAddForm = function( size ) {
+            if ( !size ) {
+                size = 'lg';
+            }
+
             var modal = $uibModal.open( {
                 animation : true,
-                size : 'lg',
+                size : size,
                 templateUrl : 'modals/sample/sample.html',
                 controller : 'SampleCtrl',
                 controllerAs : '$ctrl',
@@ -71,20 +75,6 @@
                 console.log( 'creating: ' + itemJson );
             }, function() {
                 console.log( 'modal dismissed at: ' + new Date() );
-            } );
-        }
-
-        vm.updateItem = function( item ) {
-            vm.modalInstance = $uibModal.open( {
-                template : '<update-form></update-form>',
-                appendTo : $document.find( 'dashboard' )
-            } );
-        }
-
-        vm.deleteItem = function( item ) {
-            vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm></delete-confirm>',
-                appendTo : $document.find( 'dashboard' )
             } );
         }
 
