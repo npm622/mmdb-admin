@@ -53,7 +53,7 @@
         }
 
         vm.showAddForm = function() {
-            vm.modalIsntance = $uibModal.open( {
+            vm.modalInstance = $uibModal.open( {
                 template : '<add-form active-table="$ctrl.activeTable"></add-form>',
                 appendTo : $document.find( 'dashboard' )
             } );

@@ -3,8 +3,7 @@
 
     angular.module( 'mmdb.admin' ).component( 'addForm', {
         templateUrl : 'modals/add-form/add-form.html',
-        replace : true,
-        bindins : {
+        bindings : {
             activeTable : '<'
         },
         require : {
@@ -13,11 +12,14 @@
         controller : function() {
             var vm = this;
 
-            vm.activeTable = activeTable;
+            console.log( vm.activeTable );
+
             vm.form = {};
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
+
+                console.log( vm.activeTable );
 
                 vm.ok = function() {
                     modalInstance.close( writeJson( vm.item ) );
@@ -40,26 +42,5 @@
                 return angular.toJson( item );
             }
         }
-    } )
-
-    .controller( 'AddFormCtrl', [ '$uibModalInstance', 'activeTable', AddFormCtrl ] );
-
-    function AddFormCtrl( $uibModalInstance, activeTable ) {
-        var vm = this;
-
-        vm.$onInit = function() {
-            console.log( 'on add form init...' );
-            console.log( vm.activeTable );
-            console.log( activeTable );
-        }
-
-        vm.ok = function() {
-            $uibModalInstance.close( angular.toJson( vm.form ) );
-        };
-
-        vm.cancel = function() {
-            $uibModalInstance.dismiss( 'cancel' );
-        };
-
-    }
+    } );
 } )();

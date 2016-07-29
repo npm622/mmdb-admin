@@ -5,7 +5,6 @@
 
     .component( 'updateForm', {
         templateUrl : 'modals/update-form/update-form.html',
-        replace : true,
         require : {
             parent : '^dashboard'
         },

@@ -5,7 +5,6 @@
 
     .component( 'deleteConfirm', {
         templateUrl : 'modals/delete-confirm/delete-confirm.html',
-        replace : true,
         require : {
             parent : '^dashboard'
         },
