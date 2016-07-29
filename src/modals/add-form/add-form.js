@@ -3,26 +3,19 @@
 
     angular.module( 'mmdb.admin' ).component( 'addForm', {
         templateUrl : 'modals/add-form/add-form.html',
-        bindings : {
-            activeTable : '<'
-        },
         require : {
             parent : '^dashboard'
         },
         controller : function() {
             var vm = this;
 
-            console.log( vm.activeTable );
-
             vm.form = {};
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                console.log( vm.activeTable );
-
                 vm.ok = function() {
-                    modalInstance.close( writeJson( vm.item ) );
+                    modalInstance.close( writeJson( vm.form ) );
                 }
 
                 vm.cancel = function() {
@@ -30,9 +23,7 @@
                 }
 
                 modalInstance.result.then( function( itemJson ) {
-                    vm.json = itemJson;
-                    console.log( 'adding...' );
-                    console.log( vm.json );
+                    vm.parent.addItem( itemJson );
                 }, function() {
                     console.log( 'aborting add...' );
                 } );
