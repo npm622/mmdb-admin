@@ -2,11 +2,12 @@
     <h3 class="modal-title">add new: {{$ctrl.parent.activeTable.displayName}}</h3>
 </div>
 <div class="modal-body">
-    <ul>
-        <li ng-repeat="col in $ctrl.parent.activeTable.columns">{{col.fieldName}}</li>
-    </ul>
-    Form:
-    <pre>{{ $ctrl.form | json }}</pre>
+    <form name=vm.form novalidate ng-submit=vm.signUp()>
+        <label> Email: <input type=email name=email ng-model=vm.email required>
+        </label> <label> Password: <input type=password name=password ng-model=vm.password required>
+        </label>
+        <button type=submit>Sign Up!</button>
+    </form>
 </div>
 <div class="modal-footer">
     <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">ok</button>

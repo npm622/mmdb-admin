@@ -9,13 +9,13 @@
         controller : function() {
             var vm = this;
 
-            vm.form = {};
+            vm.item = {};
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
                 vm.ok = function() {
-                    modalInstance.close( writeJson( vm.form ) );
+                    modalInstance.close( writeJson( vm.item ) );
                 }
 
                 vm.cancel = function() {
