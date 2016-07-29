@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$document', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $document, $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -53,24 +53,9 @@
         }
 
         vm.showAddForm = function() {
-            var modal = $uibModal.open( {
-                animation : true,
-                size : 'lg',
-                templateUrl : 'modals/add-form/add-form.html',
-                controller : 'SampleCtrl',
-                controllerAs : '$ctrl',
-                bindToController : true,
-                resolve : {
-                    activeTable : function() {
-                        return vm.activeTable;
-                    }
-                }
-            } );
-
-            modal.result.then( function( itemJson ) {
-                console.log( 'creating: ' + itemJson );
-            }, function() {
-                console.log( 'modal dismissed at: ' + new Date() );
+            vm.modalIsntance = $uibModal.open( {
+                template : '<add-form active-table="$ctrl.activeTable"></add-form>',
+                appendTo : $document.find( 'dashboard' )
             } );
         }
 
