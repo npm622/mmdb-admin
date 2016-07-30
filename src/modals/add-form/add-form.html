@@ -12,7 +12,7 @@
                 for="{{col.sqlName}}">{{col.displayName}}</label> <input
                 type="text"
                 ng-model="$ctrl.item[col.fieldName]"
-                ng-disabled="col.isEditable"
+                ng-disabled="col.isUneditable"
                 class="form-control"
                 placeholder="{{col.placeholder}}">
         </div>
