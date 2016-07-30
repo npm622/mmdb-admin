@@ -11,6 +11,11 @@
 
             vm.item = {};
 
+            vm.add = function() {
+                console.log( 'adding...' );
+                console.log( vm.item );
+            }
+
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
