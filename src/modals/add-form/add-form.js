@@ -11,11 +11,6 @@
 
             vm.dto = {};
 
-            vm.add = function() {
-                console.log( 'adding...' );
-                console.log( vm.dto );
-            }
-
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
@@ -40,7 +35,10 @@
                 for ( var prop in dto ) {
                     if ( dto.hasOwnProperty( prop ) ) {
                         var column = findColumn( prop );
-                        if ( column.jsonPath.contains( '.' ) ) {
+                        if ( column.jsonPath.includes( '.' ) ) {
+                            if ( !item[vm.parent.activeTable.pkKey] ) {
+                                item[vm.parent.activeTable.pkKey] = {};
+                            }
                             item[vm.parent.activeTable.pkKey][prop] = dto[prop];
                         } else {
                             item[prop] = dto[prop];

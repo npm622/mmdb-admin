@@ -11,14 +11,14 @@
                 class="control-label"
                 for="{{col.sqlName}}">{{col.displayName}}</label> <input
                 type="text"
-                ng-model="$ctrl.item[col.fieldName]"
+                ng-model="$ctrl.dto[col.fieldName]"
                 ng-disabled="col.isUneditable"
                 class="form-control"
                 placeholder="{{col.placeholder}}">
         </div>
     </form>
     <hr />
-    <pre>{{$ctrl.item | json}}</pre>
+    <pre>{{$ctrl.dto | json}}</pre>
 </div>
 <div class="modal-footer">
     <button
