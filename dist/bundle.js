@@ -98,10 +98,8 @@
 
                     if ( filter.name === 'currency' ) {
                         val = $filter( filter.name )( val, filter.symbol, filter.fractionSize );
-                    } else if ( filter.name === 'date' ) {
-                        console.log( val );
-                        console.log( $filter( filter.name )( val, filter.format, filter.timeZone ) );
-                        val = $filter( filter.name )( val, filter.format, filter.timeZone );
+                    } else if ( filter.name === 'localDate' ) {
+                        val = $filter( filter.name )( $filter( 'localDateFilter' )( val ), filter.format, filter.timeZone );
                     } else {
                         val = $filter( filter.name )( val );
                     }
@@ -359,6 +357,20 @@
 
                 return deferred.promise;
             }
+        };
+    }
+} )();
+
+( function() {
+    'use strict';
+
+    angular.module( 'mmdb.admin' )
+
+    .filter( 'localDateFilter', [ LocalDateFilter ] );
+
+    function LocalDateFilter() {
+        return function( localDate ) {
+            return new Date( localDate[0], localDate[1] - 1, localDate[2] );
         };
     }
 } )();
