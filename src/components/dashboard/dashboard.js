@@ -59,12 +59,16 @@
                     if ( filter.name === 'currency' ) {
                         val = $filter( filter.name )( val, filter.symbol, filter.fractionSize );
                     } else if ( filter.name === 'date' ) {
+                        console.log( val );
+                        console.log( $filter( filter.name )( val, filter.format, filter.timeZone ) );
                         val = $filter( filter.name )( val, filter.format, filter.timeZone );
                     } else {
                         val = $filter( filter.name )( val );
                     }
                 }
             }
+
+            return val;
         }
 
         vm.showAddForm = function() {
