@@ -59,7 +59,9 @@
                     if ( filter.name === 'currency' ) {
                         val = $filter( filter.name )( val, filter.symbol, filter.fractionSize );
                     } else if ( filter.name === 'localDate' ) {
-                        val = $filter( filter.name )( $filter( 'localDateFilter' )( val ), filter.format, filter.timeZone );
+                        val = $filter( 'date' )( $filter( 'localDateFilter' )( val ), filter.format, filter.timeZone );
+                    } else if ( filter.name === 'localDateTime' ) {
+                        val = $filter( 'date' )( $filter( 'localDateTimeFilter' )( val ), filter.format, filter.timeZone );
                     } else {
                         val = $filter( filter.name )( val );
                     }
