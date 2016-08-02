@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$document', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $document, $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -45,10 +45,25 @@
         }
 
         vm.itemValue = function( item, column ) {
+            var val;
             if ( !vm.activeTable.isSimplePk && column.isPk ) {
-                return item[vm.activeTable.pkKey][column.fieldName];
+                val = item[vm.activeTable.pkKey][column.fieldName];
             } else {
-                return item[column.fieldName];
+                val = item[column.fieldName];
+            }
+
+            if ( column.filters ) {
+                for ( var i = 0; i < column.filters.length; i++ ) {
+                    var filter = column.filters[i];
+
+                    if ( filter.name === 'currency' ) {
+                        val = $filter( filter.name )( val, filter.symbol, filter.fractionSize );
+                    } else if ( filter.name === 'date' ) {
+                        val = $filter( filter.name )( val, filter.format, filter.timeZone );
+                    } else {
+                        val = $filter( filter.name )( val );
+                    }
+                }
             }
         }
 
