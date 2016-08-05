@@ -13,11 +13,13 @@
         },
         controller : [ 'Item', function( Item ) {
             var vm = this;
-
-            vm.dto = prefilledDto( vm.item );
+            
+            vm.dto = {};
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
+
+                vm.dto = convertItem( vm.item );
 
                 vm.ok = function() {
                     var result = {};
