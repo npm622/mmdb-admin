@@ -6,6 +6,9 @@
         require : {
             parent : '^dashboard'
         },
+        bindings : {
+            onAdd : '&'
+        },
         controller : function() {
             var vm = this;
 
@@ -14,19 +17,20 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
+                modalInstance.result.then( function( payload ) {
+                    vm.onAdd( {
+                        dto : dto
+                    } );
+                }, function() { // do nothing
+                } );
+
                 vm.ok = function() {
-                    modalInstance.close( writeJson( convertDto( vm.dto ) ) );
+                    modalInstance.close( dto );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
-
-                modalInstance.result.then( function( payload ) {
-                    vm.parent.addItem( payload );
-                }, function() {
-                    console.log( 'aborting add...' );
-                } );
             }
 
             function convertDto( dto ) {

@@ -94,8 +94,15 @@
 
         vm.showAddForm = function() {
             vm.modalInstance = $uibModal.open( {
-                template : '<add-form></add-form>',
-                appendTo : $document.find( 'dashboard' )
+                template : '<add-form on-add="$ctrl.addItem(dto)"></add-form>',
+                appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
+                controllerAs : '$ctrl',
+                controller : function() {
+                    var vm = this;
+                    vm.addItem = function( dto ) {
+                        addItem( dto );
+                    }
+                }
             } );
         }
 
@@ -145,7 +152,9 @@
             } );
         }
 
-        function addItem( item ) {
+        function addItem( dto ) {
+            var item = Item.convertDto( dto );
+
             Table.keep( vm.activeTable, item ).then( function( item ) {
                 getItems();
             }, function() {

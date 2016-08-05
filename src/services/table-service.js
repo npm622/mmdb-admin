@@ -35,11 +35,11 @@
 
                 return deferred.promise;
             },
-            keep : function( table, payload ) {
+            keep : function( table, item ) {
                 var deferred = $q.defer();
 
                 if ( table.isAutoPk ) {
-                    $http.post( webEndpoint + '/' + table.contextPath, payload ).then( function( response ) {
+                    $http.post( webEndpoint + '/' + table.contextPath, angular.toJson( item ) ).then( function( response ) {
                         deferred.resolve( response.data );
                     }, function() {
                         deferred.reject();

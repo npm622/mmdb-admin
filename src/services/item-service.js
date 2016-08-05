@@ -6,6 +6,15 @@
     .factory( 'Item', [ 'Schema', Item ] )
 
     function Item( Schema ) {
+        function findColumn( fieldName ) {
+            for ( var i = 0; i < vm.parent.activeTable.columns.length; i++ ) {
+                var col = vm.parent.activeTable.columns[i];
+                if ( col.fieldName === fieldName ) {
+                    return col;
+                }
+            }
+        }
+
         return {
             determinePk : function( activeTableName, item ) {
                 var table = Schema.findTableByName( activeTableName );
@@ -27,6 +36,25 @@
                     }
                 }
                 return pk;
+            },
+            convertDto : function( dto ) {
+                var item = {};
+
+                for ( var prop in dto ) {
+                    if ( dto.hasOwnProperty( prop ) ) {
+                        var column = findColumn( prop );
+                        if ( column.jsonPath.includes( '.' ) ) {
+                            if ( !item[vm.parent.activeTable.pkKey] ) {
+                                item[vm.parent.activeTable.pkKey] = {};
+                            }
+                            item[vm.parent.activeTable.pkKey][prop] = dto[prop];
+                        } else {
+                            item[prop] = dto[prop];
+                        }
+                    }
+                }
+
+                return item;
             }
         };
     }
