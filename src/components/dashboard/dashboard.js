@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$compile', '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $compile, $document, $filter, $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -99,28 +99,16 @@
         }
 
         vm.showDeleteConfirm = function( item ) {
-            // vm.itemToDelete = item;
-            $uibModal.open( {
-                template : '<new-delete-confirm item="$ctrl.item" ok="$ctrl.ok()" cancel="$ctrl.cancel()"></new-delete-confirm>',
-                // appendTo : $document.find( 'dashboard' ),
+            vm.itemToDelete = item;
+            vm.modalInstance = $uibModal.open( {
+                template : '<delete-confirm item="$ctrl.itemToDelete"></delete-confirm>',
+                appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
-                controller : [ '$modalInstance', function( $modalInstance ) {
+                controller : function() {
                     var vm = this;
 
-                    vm.item = item;
-
-                    vm.ok = function() {
-                        $modalInstance.close( vm.item );
-                    }
-
-                    vm.cancel = function() {
-                        $modalInstance.dismiss( 'cancel' );
-                    }
-                } ]
-            } ).result.then( function( pk ) {
-                vm.deleteItem( pk );
-            }, function() {
-                console.log( 'aborting delete...' );
+                    vm.itemToDelete = item;
+                }
             } );
         }
 
