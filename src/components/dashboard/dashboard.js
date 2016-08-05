@@ -92,7 +92,7 @@
 
         vm.deleteItem = function( item ) {
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm></delete-confirm>',
+                template : '<delete-confirm item-to-delete="item"></delete-confirm>',
                 appendTo : $document.find( 'dashboard' )
             } );
         }

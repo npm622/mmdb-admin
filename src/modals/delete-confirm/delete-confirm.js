@@ -8,11 +8,16 @@
         require : {
             parent : '^dashboard'
         },
+        bindings : {
+            itemToDelete : '<'
+        },
         controller : function() {
             var vm = this;
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
+
+                console.log( vm.itemToDelete );
 
                 vm.ok = function() {
                     modalInstance.close( writeJson( {
