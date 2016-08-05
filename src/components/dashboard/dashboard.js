@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', 'Item', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table, Item ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -113,14 +113,14 @@
 
         vm.showDeleteConfirm = function( item ) {
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(pk)"></delete-confirm>',
-                appendTo : $document.find( 'dashboard' ),
+                template : '<delete-confirm item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(item)"></delete-confirm>',
+                appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
                     vm.itemToDelete = item;
-                    vm.deleteItem = function( pk ) {
-                        deleteItem( pk );
+                    vm.deleteItem = function( item ) {
+                        deleteItem( item );
                     }
                 }
             } );
@@ -159,7 +159,9 @@
             } );
         }
 
-        function deleteItem( pk ) {
+        function deleteItem( item ) {
+            var pk = Item.determinePk( vm.activeTable.sqlName, item );
+
             Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( item ) {
                 getItems();
             }, function() {

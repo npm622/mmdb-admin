@@ -6,34 +6,33 @@
     .component( 'deleteConfirm', {
         templateUrl : 'modals/delete-confirm/delete-confirm.html',
         require : {
-            parent : '^dashboard'
+            parent : '^dashboard' // this is to provide the modal instance
         },
         bindings : {
             item : '<',
             onDelete : '&'
         },
-        controller : [ 'Item', function( Item ) {
+        controller : function() {
             var vm = this;
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
+                modalInstance.result.then( function( item ) {
+                    vm.onDelete( {
+                        item : item
+                    } );
+                }, function() { // do nothing
+                } );
+
                 vm.ok = function() {
-                    modalInstance.close( Item.determinePk( vm.parent.activeTable.sqlName, vm.item ) );
+                    modalInstance.close( vm.item );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
-
-                modalInstance.result.then( function( pk ) {
-                    vm.onDelete( {
-                        pk : pk
-                    } );
-                }, function() {
-                    // do nothing
-                } );
             }
-        } ]
+        }
     } );
 } )();
