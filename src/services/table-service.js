@@ -45,7 +45,7 @@
                         deferred.reject();
                     } );
                 } else {
-                    $http.put( webEndpoint + '/' + table.contextPath + restPath( Item.determinePk( table.sqlName, angular.fromJson( payload ) ) ), payload ).then( function( response ) {
+                    $http.put( webEndpoint + '/' + table.contextPath + restPath( Item.determinePk( table.sqlName, item ) ), angular.toJson( item ) ).then( function( response ) {
                         deferred.resolve( response.data );
                     }, function() {
                         deferred.reject();

@@ -153,7 +153,7 @@
         }
 
         function addItem( dto ) {
-            var item = Item.convertDto( dto );
+            var item = Item.convertDto( vm.activeTable.sqlName, dto );
 
             Table.keep( vm.activeTable, item ).then( function( item ) {
                 getItems();
