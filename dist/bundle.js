@@ -461,19 +461,19 @@
 
     function Table( $http, $q, Schema, Item ) {
         var webEndpoint = Schema.json.webEndpoint;
-        
-        function restPath(pk) {
+
+        function restPath( pk ) {
             var restPath = '';
-            if (typeof pk === 'object') {
-                for (var property in pk) {
-                    if (pk.hasOwnProperty(property)) {
+            if ( typeof pk === 'object' ) {
+                for ( var property in pk ) {
+                    if ( pk.hasOwnProperty( property ) ) {
                         restPath += '/' + property + '/' + pk[property];
                     }
                 }
             } else {
                 restPath = '/' + pk;
             }
-            
+
             return restPath;
         }
 
@@ -491,15 +491,15 @@
             },
             keep : function( table, payload ) {
                 var deferred = $q.defer();
-                
-                if (table.isAutoPk) {
+
+                if ( table.isAutoPk ) {
                     $http.post( webEndpoint + '/' + table.contextPath, payload ).then( function( response ) {
                         deferred.resolve( response.data );
                     }, function() {
                         deferred.reject();
                     } );
                 } else {
-                    $http.put( webEndpoint + '/' + table.contextPath + restPath(Item.determinePk(table.sqlName, angular.fromJson(payload))), payload ).then( function( response ) {
+                    $http.put( webEndpoint + '/' + table.contextPath + restPath( Item.determinePk( table.sqlName, angular.fromJson( payload ) ) ), payload ).then( function( response ) {
                         deferred.resolve( response.data );
                     }, function() {
                         deferred.reject();
@@ -508,15 +508,26 @@
 
                 return deferred.promise;
             },
-            dropByPrimaryKey : function(table, pk) {
+            modify : function( table, pk, payload ) {
                 var deferred = $q.defer();
-                
-                $http.delete( webEndpoint + '/' + table.contextPath + restPath(pk) ).then( function( response ) {
+
+                $http.put( webEndpoint + '/' + table.contextPath + restPath( pk ), payload ).then( function( response ) {
                     deferred.resolve( response.data );
                 }, function() {
                     deferred.reject();
                 } );
-                
+
+                return deferred.promise;
+            },
+            dropByPrimaryKey : function( table, pk ) {
+                var deferred = $q.defer();
+
+                 $http.delete( webEndpoint + '/' + table.contextPath + restPath( pk ) ).then( function( response ) {
+                     deferred.resolve( response.data );
+                 }, function() {
+                     deferred.reject();
+                 } );
+
                 return deferred.promise;
             }
         };
