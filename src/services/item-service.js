@@ -6,7 +6,7 @@
     .factory( 'Item', [ 'Schema', Item ] )
 
     function Item( Schema ) {
-        function findColumn( fieldName ) {
+        function findColumn( columns, fieldName ) {
             for ( var i = 0; i < vm.parent.activeTable.columns.length; i++ ) {
                 var col = vm.parent.activeTable.columns[i];
                 if ( col.fieldName === fieldName ) {
@@ -37,17 +37,19 @@
                 }
                 return pk;
             },
-            convertDto : function( dto ) {
+            convertDto : function( activeTableName, dto ) {
+                var table = Schema.findTableByName( activeTableName );
+
                 var item = {};
 
                 for ( var prop in dto ) {
                     if ( dto.hasOwnProperty( prop ) ) {
-                        var column = findColumn( prop );
+                        var column = findColumn( table.columns, prop );
                         if ( column.jsonPath.includes( '.' ) ) {
-                            if ( !item[vm.parent.activeTable.pkKey] ) {
-                                item[vm.parent.activeTable.pkKey] = {};
+                            if ( !item[table.pkKey] ) {
+                                item[table.pkKey] = {};
                             }
-                            item[vm.parent.activeTable.pkKey][prop] = dto[prop];
+                            item[table.pkKey][prop] = dto[prop];
                         } else {
                             item[prop] = dto[prop];
                         }

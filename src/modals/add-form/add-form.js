@@ -17,7 +17,7 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                modalInstance.result.then( function( payload ) {
+                modalInstance.result.then( function( dto ) {
                     vm.onAdd( {
                         dto : dto
                     } );
@@ -25,7 +25,7 @@
                 } );
 
                 vm.ok = function() {
-                    modalInstance.close( dto );
+                    modalInstance.close( vm.dto );
                 }
 
                 vm.cancel = function() {
