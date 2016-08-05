@@ -18,8 +18,10 @@
         getItems();
 
         vm.addItem = function( payload ) {
-            Table.keep( vm.activeTable, payload );
-            getItems();
+            Table.keep( vm.activeTable, payload ).then( function( item ) {
+                getItems();
+            }, function() {
+            } );
         }
 
         vm.updateItem = function( pk, payload ) {
@@ -31,8 +33,10 @@
         }
 
         vm.deleteItem = function( pk ) {
-            Table.dropByPrimaryKey( vm.activeTable, pk );
-            getItems();
+            Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( item ) {
+                getItems();
+            }, function() {
+            } );
         }
 
         vm.search = function() {
