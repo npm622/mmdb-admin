@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$compile', '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $compile, $document, $filter, $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -101,8 +101,13 @@
         vm.showDeleteConfirm = function( item ) {
             vm.itemToDelete = item;
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm></delete-confirm>',
-                appendTo : $document.find( 'dashboard' )
+                template : '<new-delete-confirm item="$ctrl.item"></new-delete-confirm>',
+                appendTo : $document.find( 'dashboard' ),
+                controllerAs : '$ctrl',
+                controller : function() {
+                    var vm = this;
+                    vm.item = item;
+                }
             } );
         }
 
