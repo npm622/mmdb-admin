@@ -14,7 +14,7 @@
         controller : [ 'Item', function( Item ) {
             var vm = this;
 
-            vm.dto = {};
+            vm.dto = prefilledDto( vm.item );
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
@@ -36,6 +36,22 @@
                 }, function() {
                     console.log( 'aborting update...' );
                 } );
+            }
+
+            function convertItem( item ) {
+                var dto = {};
+
+                for ( var i = 0; i < vm.parent.activeTable.columns; i++ ) {
+                    var column = vm.parent.activeTable.columns[i];
+
+                    if ( column.jsonPath.includes( '.' ) ) {
+                        dto[column.fieldName] = item[vm.parent.activeTable.pkKey][column.fieldName];
+                    } else {
+                        dto[column.fieldName] = item[column.fieldName];
+                    }
+                }
+
+                return dto;
             }
 
             function determinePk( item ) {
