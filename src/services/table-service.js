@@ -36,9 +36,6 @@
                 return deferred.promise;
             },
             keep : function( table, payload ) {
-                console.log( 'adding...' );
-                console.log( payload );
-                
                 var deferred = $q.defer();
                 
                 if (table.isAutoPk) {
@@ -48,7 +45,7 @@
                         deferred.reject();
                     } );
                 } else {
-                    $http.put( webEndpoint + '/' + table.contextPath + restPath(Item.determinePk(table, Angular.fromJson(payload))), payload ).then( function( response ) {
+                    $http.put( webEndpoint + '/' + table.contextPath + restPath(Item.determinePk(table.sqlName, angular.fromJson(payload))), payload ).then( function( response ) {
                         deferred.resolve( response.data );
                     }, function() {
                         deferred.reject();
@@ -58,9 +55,6 @@
                 return deferred.promise;
             },
             dropByPrimaryKey : function(table, pk) {
-                console.log( 'deleting...' );
-                console.log( pk );
-                
                 var deferred = $q.defer();
                 
                 $http.delete( webEndpoint + '/' + table.contextPath + restPath(pk) ).then( function( response ) {

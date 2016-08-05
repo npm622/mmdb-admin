@@ -19,6 +19,7 @@
 
         vm.addItem = function( payload ) {
             Table.keep( vm.activeTable, payload );
+            getItems();
         }
 
         vm.updateItem = function( pk, payload ) {
@@ -26,10 +27,12 @@
             console.log( 'updating...' );
             console.log( pk );
             console.log( payload );
+            // getItems();
         }
 
         vm.deleteItem = function( pk ) {
             Table.dropByPrimaryKey( vm.activeTable, pk );
+            getItems();
         }
 
         vm.search = function() {
