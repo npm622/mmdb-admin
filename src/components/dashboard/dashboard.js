@@ -99,15 +99,28 @@
         }
 
         vm.showDeleteConfirm = function( item ) {
-            vm.itemToDelete = item;
-            vm.modalInstance = $uibModal.open( {
-                template : '<new-delete-confirm item="$ctrl.item"></new-delete-confirm>',
-                appendTo : $document.find( 'dashboard' ),
+            // vm.itemToDelete = item;
+            $uibModal.open( {
+                template : '<new-delete-confirm item="$ctrl.item" ok="$ctrl.ok()" cancel="$ctrl.cancel()"></new-delete-confirm>',
+                // appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
-                controller : function() {
+                controller : [ '$modalInstance', function( $modalInstance ) {
                     var vm = this;
+
                     vm.item = item;
-                }
+
+                    vm.ok = function() {
+                        $modalInstance.close( vm.item );
+                    }
+
+                    vm.cancel = function() {
+                        $modalInstance.dismiss( 'cancel' );
+                    }
+                } ]
+            } ).result.then( function( pk ) {
+                vm.deleteItem( pk );
+            }, function() {
+                console.log( 'aborting delete...' );
             } );
         }
 
