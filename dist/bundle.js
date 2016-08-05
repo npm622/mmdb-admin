@@ -434,8 +434,8 @@
 
     function Item( Schema ) {
         function findColumn( columns, fieldName ) {
-            for ( var i = 0; i < vm.parent.activeTable.columns.length; i++ ) {
-                var col = vm.parent.activeTable.columns[i];
+            for ( var i = 0; i < columns.length; i++ ) {
+                var col = columns[i];
                 if ( col.fieldName === fieldName ) {
                     return col;
                 }
