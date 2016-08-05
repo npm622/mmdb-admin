@@ -178,7 +178,6 @@
 
             Table.fetchAll( vm.activeTable ).then( function( items ) {
                 vm.items = items;
-                console.log( vm.items );
             }, function() {
             } );
         }
