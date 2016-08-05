@@ -83,20 +83,34 @@
             console.log( json );
         }
 
-        vm.updateItem = function( item ) {
+        vm.showUpdateForm = function( item ) {
+            vm.itemToUpdate = item;
             vm.modalInstance = $uibModal.open( {
                 template : '<update-form></update-form>',
                 appendTo : $document.find( 'dashboard' )
             } );
         }
 
-        vm.deleteItem = function( item ) {
+        vm.updateItem = function( pk, json ) {
+            vm.itemToUpdate = null;
+            console.log( 'updating...' );
+            console.log( json );
+        }
+
+        vm.showDeleteConfirm = function( item ) {
+            vm.itemToDelete = item;
             vm.modalInstance = $uibModal.open( {
-                template : $interpolate( '<delete-confirm item-to-delete="{{item}}"></delete-confirm>' )( {
+                template : $interpolate( '<delete-confirm></delete-confirm>' )( {
                     item : item
                 } ),
                 appendTo : $document.find( 'dashboard' )
             } );
+        }
+
+        vm.deleteItem = function( pk ) {
+            vm.itemToDelete = null;
+            console.log( 'deleting...' );
+            console.log( item );
         }
 
         function determineActiveTable() {

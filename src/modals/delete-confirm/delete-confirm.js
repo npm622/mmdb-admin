@@ -17,28 +17,24 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                console.log( vm.itemToDelete );
+                console.log( vm.parent.itemToDelete );
 
                 vm.ok = function() {
-                    modalInstance.close( writeJson( {
-                        hello : 'world!'
-                    } ) );
+                    modalInstance.close( determinePk( 'pk' ) );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
 
-                modalInstance.result.then( function( itemJson ) {
-                    vm.json = itemJson;
-                    console.log( 'deleting...' );
-                    console.log( vm.json );
+                modalInstance.result.then( function( pk ) {
+                    vm.parent.deleteItem( pk );
                 }, function() {
-                    console.log( 'aborting update...' );
+                    console.log( 'aborting delete...' );
                 } );
             }
 
-            function writeJson( item ) {
+            function determinePk( item ) {
                 return angular.toJson( item );
             }
         }

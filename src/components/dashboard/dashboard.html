@@ -35,10 +35,10 @@
                     <tr ng-repeat="item in $ctrl.items | filter : $ctrl.filter | orderBy : $ctrl.sortExpression : $ctrl.sortDirection as filteredItems">
                         <td class="item-row-buttons">
                             <div class="btn-group btn-group-xs" role="group" aria-label="...">
-                                <button ng-click="$ctrl.updateItem(item)" class="btn btn-info">
+                                <button ng-click="$ctrl.showUpdateForm(item)" class="btn btn-info">
                                     <i class="fa fa-wrench fa-fw" aria-hidden="true"></i>
                                 </button>
-                                <button ng-click="$ctrl.deleteItem(item)" class="btn btn-danger">
+                                <button ng-click="$ctrl.showDeleteConfirm(item)" class="btn btn-danger">
                                     <i class="fa fa-times-circle fa-fw" aria-hidden="true"></i>
                                 </button>
                             </div>
