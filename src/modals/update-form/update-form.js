@@ -13,13 +13,13 @@
         },
         controller : [ 'Item', function( Item ) {
             var vm = this;
-            
+
             vm.dto = {};
 
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                vm.dto = convertItem( vm.item );
+                vm.dto = convertItem( vm.item, vm.parent.activeTable.columns, vm.parent.activeTable.pkKey );
 
                 vm.ok = function() {
                     var result = {};
@@ -40,14 +40,14 @@
                 } );
             }
 
-            function convertItem( item ) {
+            function convertItem( item, columns, pkKey ) {
                 var dto = {};
 
-                for ( var i = 0; i < vm.parent.activeTable.columns; i++ ) {
-                    var column = vm.parent.activeTable.columns[i];
+                for ( var i = 0; i < columns; i++ ) {
+                    var column = columns[i];
 
                     if ( column.jsonPath.includes( '.' ) ) {
-                        dto[column.fieldName] = item[vm.parent.activeTable.pkKey][column.fieldName];
+                        dto[column.fieldName] = item[pkKey][column.fieldName];
                     } else {
                         dto[column.fieldName] = item[column.fieldName];
                     }
