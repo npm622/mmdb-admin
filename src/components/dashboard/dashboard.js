@@ -25,11 +25,10 @@
         }
 
         vm.updateItem = function( pk, payload ) {
-            vm.itemToUpdate = null;
-            console.log( 'updating...' );
-            console.log( pk );
-            console.log( payload );
-            // getItems();
+            Table.modify( vm.activeTable, pk, payload ).then( function( item ) {
+                getItems();
+            }, function() {
+            } );
         }
 
         vm.deleteItem = function( pk ) {
@@ -101,14 +100,12 @@
         }
 
         vm.showUpdateForm = function( item ) {
-            vm.itemToUpdate = item;
             vm.modalInstance = $uibModal.open( {
                 template : '<update-form item="$ctrl.itemToUpdate"></update-form>',
                 appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-
                     vm.itemToUpdate = item;
                 }
             } );
@@ -121,7 +118,6 @@
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-
                     vm.itemToDelete = item;
                 }
             } );
