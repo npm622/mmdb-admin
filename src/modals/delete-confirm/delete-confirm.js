@@ -9,7 +9,8 @@
             parent : '^dashboard'
         },
         bindings : {
-            item : '<'
+            item : '<',
+            onDelete : '&'
         },
         controller : [ 'Item', function( Item ) {
             var vm = this;
@@ -26,7 +27,9 @@
                 }
 
                 modalInstance.result.then( function( pk ) {
-                    vm.parent.deleteItem( pk );
+                    vm.onDelete( {
+                        pk : pk
+                    } );
                 }, function() {
                     // do nothing
                 } );

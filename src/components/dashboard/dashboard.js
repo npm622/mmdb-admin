@@ -113,12 +113,15 @@
 
         vm.showDeleteConfirm = function( item ) {
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm item="$ctrl.itemToDelete"></delete-confirm>',
+                template : '<delete-confirm item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(pk)"></delete-confirm>',
                 appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
                     vm.itemToDelete = item;
+                    vm.deleteItem = function( pk ) {
+                        deleteItem( pk );
+                    }
                 }
             } );
         }
@@ -134,10 +137,31 @@
         }
 
         function getItems() {
-            vm.items = [];
+            vm.items = []; // TODO: don't do this and overlay a spinner instead
 
             Table.fetchAll( vm.activeTable ).then( function( items ) {
                 vm.items = items;
+            }, function() {
+            } );
+        }
+
+        function addItem( item ) {
+            Table.keep( vm.activeTable, item ).then( function( item ) {
+                getItems();
+            }, function() {
+            } );
+        }
+
+        function updateItem( pk, item ) {
+            Table.modify( vm.activeTable, pk, item ).then( function( item ) {
+                getItems();
+            }, function() {
+            } );
+        }
+
+        function deleteItem( pk ) {
+            Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( item ) {
+                getItems();
             }, function() {
             } );
         }
