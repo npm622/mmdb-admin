@@ -8,7 +8,10 @@
         require : {
             parent : '^dashboard'
         },
-        controller : function() {
+        bindings : {
+            item : '<'
+        },
+        controller : [ 'Item', function( Item ) {
             var vm = this;
 
             vm.dto = {};
@@ -17,15 +20,19 @@
                 var modalInstance = vm.parent.modalInstance;
 
                 vm.ok = function() {
-                    modalInstance.close( writeJson( convertDto( vm.dto ) ) );
+                    var result = {};
+                    result.pk = Item.determinePk( vm.parent.activeTable.sqlName, vm.item );
+                    result.payload = writeJson( convertDto( vm.dto ) );
+
+                    modalInstance.close( result );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
 
-                modalInstance.result.then( function( pk, itemJson ) {
-                    vm.parent.updateItem( pk, itemJson );
+                modalInstance.result.then( function( result ) {
+                    vm.parent.updateItem( result.pk, result.payload );
                 }, function() {
                     console.log( 'aborting update...' );
                 } );
@@ -67,6 +74,6 @@
             function writeJson( item ) {
                 return angular.toJson( item );
             }
-        }
+        } ]
     } );
 } )();

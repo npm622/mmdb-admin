@@ -17,6 +17,21 @@
         setupSortAndSearch();
         getItems();
 
+        vm.addItem = function( payload ) {
+            Table.keep( vm.activeTable, payload );
+        }
+
+        vm.updateItem = function( pk, payload ) {
+            vm.itemToUpdate = null;
+            console.log( 'updating...' );
+            console.log( pk );
+            console.log( payload );
+        }
+
+        vm.deleteItem = function( pk ) {
+            Table.dropByPrimaryKey( vm.activeTable, pk );
+        }
+
         vm.search = function() {
             vm.filter.$ = vm.searchInput;
         }
@@ -78,28 +93,21 @@
             } );
         }
 
-        vm.addItem = function( json ) {
-            console.log( 'adding...' );
-            console.log( json );
-        }
-
         vm.showUpdateForm = function( item ) {
             vm.itemToUpdate = item;
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form></update-form>',
-                appendTo : $document.find( 'dashboard' )
+                template : '<update-form item="$ctrl.itemToUpdate"></update-form>',
+                appendTo : $document.find( 'dashboard' ),
+                controllerAs : '$ctrl',
+                controller : function() {
+                    var vm = this;
+
+                    vm.itemToUpdate = item;
+                }
             } );
         }
 
-        vm.updateItem = function( pk, json ) {
-            vm.itemToUpdate = null;
-            console.log( 'updating...' );
-            console.log( pk );
-            console.log( json );
-        }
-
         vm.showDeleteConfirm = function( item ) {
-            vm.itemToDelete = item;
             vm.modalInstance = $uibModal.open( {
                 template : '<delete-confirm item="$ctrl.itemToDelete"></delete-confirm>',
                 appendTo : $document.find( 'dashboard' ),
@@ -110,12 +118,6 @@
                     vm.itemToDelete = item;
                 }
             } );
-        }
-
-        vm.deleteItem = function( pk ) {
-            vm.itemToDelete = null;
-            console.log( 'deleting...' );
-            console.log( pk );
         }
 
         function determineActiveTable() {

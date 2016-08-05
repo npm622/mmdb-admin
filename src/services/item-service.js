@@ -18,13 +18,11 @@
                 // compound primary key -- return "Map"
                 var pk = {};
                 for ( var i = 0; i < table.pks.length; i++ ) {
-                    var pkName = table.pks[i];
-
                     for ( var j = 0; j < table.columns.length; j++ ) {
                         var column = table.columns[j];
 
-                        if ( pkName === column.sqlName ) {
-                            pk[pkName] = item[table.pkKey][column.fieldName];
+                        if ( table.pks[i] === column.sqlName ) {
+                            pk[column.fieldName] = item[table.pkKey][column.fieldName];
                         }
                     }
                 }

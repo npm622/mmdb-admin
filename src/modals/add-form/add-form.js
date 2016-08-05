@@ -22,8 +22,8 @@
                     modalInstance.dismiss( 'cancel' );
                 }
 
-                modalInstance.result.then( function( itemJson ) {
-                    vm.parent.addItem( itemJson );
+                modalInstance.result.then( function( payload ) {
+                    vm.parent.addItem( payload );
                 }, function() {
                     console.log( 'aborting add...' );
                 } );
