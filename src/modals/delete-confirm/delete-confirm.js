@@ -17,8 +17,6 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                console.log( vm.parent.itemToDelete );
-
                 vm.ok = function() {
                     modalInstance.close( determinePk( 'pk' ) );
                 }

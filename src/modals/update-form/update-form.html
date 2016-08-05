@@ -1,14 +1,32 @@
 <div class="modal-header">
-    <h3 class="modal-title">add new: {{$ctrl.activeTable.displayName}}</h3>
+    <h3 class="modal-title">update existing: {{$ctrl.parent.activeTable.displayName}}</h3>
 </div>
 <div class="modal-body">
-    <ul>
-        <li ng-repeat="col in $ctrl.activeTable.columns">{{col.fieldName}}</li>
-    </ul>
-    Form:
-    <pre>{{ $ctrl.form | json }}</pre>
+    <form ng-submit="$ctrl.add()">
+        <div
+            ng-repeat="col in $ctrl.parent.activeTable.columns"
+            class="form-group">
+            <label
+                id="{{col.sqlName}}"
+                class="control-label"
+                for="{{col.sqlName}}">{{col.displayName}}</label> <input
+                type="text"
+                ng-model="$ctrl.dto[col.fieldName]"
+                ng-disabled="col.isUneditable"
+                class="form-control"
+                placeholder="{{col.placeholder}}">
+        </div>
+    </form>
+    <hr />
+    <pre>{{ $ctrl.dto | json }}</pre>
 </div>
 <div class="modal-footer">
-    <button class="btn btn-primary" type="button" ng-click="$ctrl.ok()">ok</button>
-    <button class="btn btn-warning" type="button" ng-click="$ctrl.cancel()">cancel</button>
+    <button
+        class="btn btn-primary"
+        type="button"
+        ng-click="$ctrl.ok()">ok</button>
+    <button
+        class="btn btn-warning"
+        type="button"
+        ng-click="$ctrl.cancel()">cancel</button>
 </div>

@@ -11,24 +11,57 @@
         controller : function() {
             var vm = this;
 
+            vm.dto = {};
+
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
                 vm.ok = function() {
-                    modalInstance.close( writeJson( vm.item ) );
+                    modalInstance.close( writeJson( convertDto( vm.dto ) ) );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
 
-                modalInstance.result.then( function( itemJson ) {
-                    vm.json = itemJson;
-                    console.log( 'updating...' );
-                    console.log( vm.json );
+                modalInstance.result.then( function( pk, itemJson ) {
+                    vm.parent.updateItem( pk, itemJson );
                 }, function() {
                     console.log( 'aborting update...' );
                 } );
+            }
+
+            function determinePk( item ) {
+                return angular.toJson( item );
+            }
+
+            function convertDto( dto ) {
+                var item = {};
+
+                for ( var prop in dto ) {
+                    if ( dto.hasOwnProperty( prop ) ) {
+                        var column = findColumn( prop );
+                        if ( column.jsonPath.includes( '.' ) ) {
+                            if ( !item[vm.parent.activeTable.pkKey] ) {
+                                item[vm.parent.activeTable.pkKey] = {};
+                            }
+                            item[vm.parent.activeTable.pkKey][prop] = dto[prop];
+                        } else {
+                            item[prop] = dto[prop];
+                        }
+                    }
+                }
+
+                return item;
+            }
+
+            function findColumn( fieldName ) {
+                for ( var i = 0; i < vm.parent.activeTable.columns.length; i++ ) {
+                    var col = vm.parent.activeTable.columns[i];
+                    if ( col.fieldName === fieldName ) {
+                        return col;
+                    }
+                }
             }
 
             function writeJson( item ) {

@@ -5,10 +5,10 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$document', '$filter', '$interpolate', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
+        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $document, $filter, $interpolate, $location, $uibModal, Schema, Table ) {
+    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table ) {
         var vm = this;
 
         vm.schema = Schema.json;
@@ -94,15 +94,14 @@
         vm.updateItem = function( pk, json ) {
             vm.itemToUpdate = null;
             console.log( 'updating...' );
+            console.log( pk );
             console.log( json );
         }
 
         vm.showDeleteConfirm = function( item ) {
             vm.itemToDelete = item;
             vm.modalInstance = $uibModal.open( {
-                template : $interpolate( '<delete-confirm></delete-confirm>' )( {
-                    item : item
-                } ),
+                template : '<delete-confirm></delete-confirm>',
                 appendTo : $document.find( 'dashboard' )
             } );
         }
@@ -110,7 +109,7 @@
         vm.deleteItem = function( pk ) {
             vm.itemToDelete = null;
             console.log( 'deleting...' );
-            console.log( item );
+            console.log( pk );
         }
 
         function determineActiveTable() {
