@@ -108,12 +108,15 @@
 
         vm.showUpdateForm = function( item ) {
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form item="$ctrl.itemToUpdate"></update-form>',
+                template : '<update-form dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)></update-form>',
                 appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-                    vm.itemToUpdate = item;
+                    vm.dtoToUpdate = Item.convertItem( item );
+                    vm.updateItem = function( dto ) {
+                        updateItem( dto );
+                    }
                 }
             } );
         }
@@ -161,7 +164,10 @@
             } );
         }
 
-        function updateItem( pk, item ) {
+        function updateItem( dto ) {
+            var item = Item.convertDto( vm.activeTable.sqlName, dto );
+            var pk = Item.determinePk( vm.activeTable.sqlName, item );
+
             Table.modify( vm.activeTable, pk, item ).then( function( item ) {
                 getItems();
             }, function() {

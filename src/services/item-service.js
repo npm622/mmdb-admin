@@ -57,6 +57,23 @@
                 }
 
                 return item;
+            },
+            convertItem : function( activeTableName, item ) {
+                var table = Schema.findTableByName( activeTableName );
+
+                var dto = {};
+
+                for ( var i = 0; i < table.columns.length; i++ ) {
+                    var column = table.columns[i];
+
+                    if ( column.jsonPath.includes( '.' ) ) {
+                        dto[column.fieldName] = item[table.pkKey][column.fieldName];
+                    } else {
+                        dto[column.fieldName] = item[column.fieldName];
+                    }
+                }
+
+                return dto;
             }
         };
     }
