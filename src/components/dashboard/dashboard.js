@@ -110,7 +110,7 @@
             var dtoToUpdate = {};
 
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form on-update="$ctrl.updateItem(dto)"></update-form>',
+                template : '<update-form dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)"></update-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
