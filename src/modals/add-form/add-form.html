@@ -1,10 +1,10 @@
 <div class="modal-header">
-    <h3 class="modal-title">add new: {{$ctrl.parent.activeTable.displayName}}</h3>
+    <h3 class="modal-title">add new: {{$ctrl.table.displayName}}</h3>
 </div>
 <div class="modal-body">
     <form ng-submit="$ctrl.add()">
         <div
-            ng-repeat="col in $ctrl.parent.activeTable.columns"
+            ng-repeat="col in $ctrl.table.columns"
             class="form-group">
             <label
                 id="{{col.sqlName}}"

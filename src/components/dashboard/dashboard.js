@@ -17,27 +17,6 @@
         setupSortAndSearch();
         getItems();
 
-        vm.addItem = function( payload ) {
-            Table.keep( vm.activeTable, payload ).then( function( item ) {
-                getItems();
-            }, function() {
-            } );
-        }
-
-        vm.updateItem = function( pk, payload ) {
-            Table.modify( vm.activeTable, pk, payload ).then( function( item ) {
-                getItems();
-            }, function() {
-            } );
-        }
-
-        vm.deleteItem = function( pk ) {
-            Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( item ) {
-                getItems();
-            }, function() {
-            } );
-        }
-
         vm.search = function() {
             vm.filter.$ = vm.searchInput;
         }
@@ -93,12 +72,15 @@
         }
 
         vm.showAddForm = function() {
+            var activeTable = vm.activeTable;
+
             vm.modalInstance = $uibModal.open( {
-                template : '<add-form on-add="$ctrl.addItem(dto)"></add-form>',
+                template : '<add-form table="$ctrl.activeTable" on-add="$ctrl.addItem(dto)"></add-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
+                    vm.activeTable = activeTable;
                     vm.addItem = function( dto ) {
                         addItem( dto );
                     }

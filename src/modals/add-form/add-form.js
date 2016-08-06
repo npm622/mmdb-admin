@@ -9,6 +9,7 @@
             parent : '^dashboard'
         },
         bindings : {
+            table : '<',
             onAdd : '&'
         },
         controller : function() {
