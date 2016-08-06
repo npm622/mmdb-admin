@@ -106,7 +106,7 @@
             } );
         }
 
-        vm.showUpdateForm = function( table, item ) {
+        vm.showUpdateForm = function( item ) {
             var dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
 
             vm.modalInstance = $uibModal.open( {

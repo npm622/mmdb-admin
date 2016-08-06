@@ -18,6 +18,8 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
+                console.log( vm.dto );
+
                 modalInstance.result.then( function( dto ) {
                     vm.onUpdate( {
                         dto : dto
