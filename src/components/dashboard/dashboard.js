@@ -113,7 +113,7 @@
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-                    vm.dtoToUpdate = convertItemToDto( item );
+                    vm.dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
                     vm.updateItem = function( dto ) {
                         updateItem( dto );
                     }
@@ -172,10 +172,6 @@
                 getItems();
             }, function() {
             } );
-        }
-
-        function convertItemToDto( item ) {
-            return Item.convertItem( vm.activeTable.sqlName, item );
         }
 
         function deleteItem( item ) {
