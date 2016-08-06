@@ -9,6 +9,7 @@
             parent : '^dashboard' // this is to provide the modal instance
         },
         bindings : {
+            table : '<',
             item : '<',
             onDelete : '&'
         },

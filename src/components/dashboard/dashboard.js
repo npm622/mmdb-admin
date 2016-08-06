@@ -89,14 +89,16 @@
         }
 
         vm.showUpdateForm = function( item ) {
+            var activeTable = vm.activeTable;
             var dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
 
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)"></update-form>',
+                template : '<update-form table="$ctrl.activeTable" dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)"></update-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
+                    vm.activeTable = activeTable;
                     vm.dtoToUpdate = dtoToUpdate;
                     vm.updateItem = function( dto ) {
                         updateItem( dto );
@@ -106,12 +108,15 @@
         }
 
         vm.showDeleteConfirm = function( item ) {
+            var activeTable = vm.activeTable;
+            
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(item)"></delete-confirm>',
+                template : '<delete-confirm table="$ctrl.activeTable" item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(item)"></delete-confirm>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
+                    vm.activeTable = activeTable;
                     vm.itemToDelete = item;
                     vm.deleteItem = function( item ) {
                         deleteItem( item );
