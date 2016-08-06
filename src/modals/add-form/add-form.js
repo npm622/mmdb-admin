@@ -1,7 +1,9 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin' ).component( 'addForm', {
+    angular.module( 'mmdb.admin' )
+
+    .component( 'addForm', {
         templateUrl : 'modals/add-form/add-form.html',
         require : {
             parent : '^dashboard'

@@ -119,13 +119,13 @@
 //                }
 //            } );
             vm.modalInstance = $uibModal.open( {
-                template : '<add-form on-add="$ctrl.addItem(dto)"></add-form>',
+                template : '<update-form on-update="$ctrl.updateItem(dto)"></update-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-                    vm.addItem = function( dto ) {
-                        addItem( dto );
+                    vm.updateItem = function( dto ) {
+                        updateItem( dto );
                     }
                 }
             } );
