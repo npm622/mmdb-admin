@@ -107,23 +107,15 @@
         }
 
         vm.showUpdateForm = function( item ) {
-//            vm.modalInstance = $uibModal.open( {
-//                template : '<update-form on-update="$ctrl.updateItem(dto)></update-form>',
-//                appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
-//                controllerAs : '$ctrl',
-//                controller : function() {
-//                    var vm = this;
-//                    vm.updateItem = function( dto ) {
-//                        updateItem( dto );
-//                    }
-//                }
-//            } );
+            var dtoToUpdate = {};
+
             vm.modalInstance = $uibModal.open( {
                 template : '<update-form on-update="$ctrl.updateItem(dto)"></update-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
+                    vm.dtoToUpdate = dtoToUpdate;
                     vm.updateItem = function( dto ) {
                         updateItem( dto );
                     }
