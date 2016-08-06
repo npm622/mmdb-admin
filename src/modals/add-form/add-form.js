@@ -6,7 +6,7 @@
     .component( 'addForm', {
         templateUrl : 'modals/add-form/add-form.html',
         require : {
-            parent : '^dashboard'
+            parent : '^^dashboard'
         },
         bindings : {
             table : '<',
