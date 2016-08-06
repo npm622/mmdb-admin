@@ -9,7 +9,6 @@
             parent : '^dashboard'
         },
         bindings : {
-            dto : '<',
             onUpdate : '&'
         },
         controller : function() {
@@ -18,6 +17,7 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
+                vm.dto = {};
                 console.log( vm.dto );
 
                 modalInstance.result.then( function( dto ) {

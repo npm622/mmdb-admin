@@ -147,15 +147,12 @@
         }
 
         vm.showUpdateForm = function( item ) {
-            var dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
-
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)></update-form>',
+                template : '<update-form on-update="$ctrl.updateItem(dto)></update-form>',
                 appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-                    vm.dtoToUpdate = {};
                     vm.updateItem = function( dto ) {
                         updateItem( dto );
                     }
@@ -230,13 +227,15 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin' ).component( 'addForm', {
-        templateUrl : 'modals/add-form/add-form.html',
+    angular.module( 'mmdb.admin' )
+
+    .component( 'updateForm', {
+        templateUrl : 'modals/update-form/update-form.html',
         require : {
             parent : '^dashboard'
         },
         bindings : {
-            onAdd : '&'
+            onUpdate : '&'
         },
         controller : function() {
             var vm = this;
@@ -244,8 +243,11 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
+                vm.dto = {};
+                console.log( vm.dto );
+
                 modalInstance.result.then( function( dto ) {
-                    vm.onAdd( {
+                    vm.onUpdate( {
                         dto : dto
                     } );
                 }, function() { // do nothing
@@ -305,16 +307,13 @@
 ( function() {
     'use strict';
 
-    angular.module( 'mmdb.admin' )
-
-    .component( 'updateForm', {
-        templateUrl : 'modals/update-form/update-form.html',
+    angular.module( 'mmdb.admin' ).component( 'addForm', {
+        templateUrl : 'modals/add-form/add-form.html',
         require : {
             parent : '^dashboard'
         },
         bindings : {
-            dto : '<',
-            onUpdate : '&'
+            onAdd : '&'
         },
         controller : function() {
             var vm = this;
@@ -322,10 +321,8 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                console.log( vm.dto );
-
                 modalInstance.result.then( function( dto ) {
-                    vm.onUpdate( {
+                    vm.onAdd( {
                         dto : dto
                     } );
                 }, function() { // do nothing

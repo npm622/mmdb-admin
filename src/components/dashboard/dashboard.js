@@ -107,15 +107,12 @@
         }
 
         vm.showUpdateForm = function( item ) {
-            var dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
-
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)></update-form>',
+                template : '<update-form on-update="$ctrl.updateItem(dto)></update-form>',
                 appendTo : $document.find( 'dashboard' ),
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
-                    vm.dtoToUpdate = {};
                     vm.updateItem = function( dto ) {
                         updateItem( dto );
                     }
