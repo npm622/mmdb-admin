@@ -131,8 +131,6 @@
         }
 
         function getItems() {
-            vm.items = []; // TODO: don't do this and overlay a spinner instead
-
             Table.fetchAll( vm.activeTable ).then( function( items ) {
                 vm.items = items;
             }, function() {
