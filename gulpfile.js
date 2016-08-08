@@ -1,50 +1,75 @@
-var gulp = require( 'gulp' );
-var angularTemplateCache = require( 'gulp-angular-templatecache' );
-var bower = require( 'gulp-bower' );
-var clean = require( 'gulp-clean' );
-var replaceTask = require( 'gulp-replace-task' );
-var fs = require( 'fs' );
-var pkg = require( './package.json' );
+var _ = require( 'underscore' );
 
-var config = {
-	bowerDir : 'bower_components',
-	directiveJs : pkg.name + '.js',
-	directiveCss : pkg.name + '.css',
-	htmltemplates : 'src/**/*.tmpl.html',
-	templateCache : {
-		tmpDir : 'tmp/',
-		file : 'tmpls.tmp',
-		options : {
-			module : 'mmdb.admin',
-			root : '',
-			standAlone : false
-		}
-	}
+var bower = require( 'gulp-bower' );
+var concat = require( 'gulp-concat' );
+var debug = require( 'gulp-debug' );
+var gulp = require( 'gulp' );
+// var sourcemaps = require( 'gulp-sourcemaps' );
+var templates = require( 'gulp-angular-templatecache' );
+
+var templateCache = {
+    path : 'src',
+    filename : 'templates.js',
+    options : {
+        module : 'mmdb.admin.templates',
+        standalone : true,
+        moduleSystem : 'IIFE'
+    }
+};
+
+var js = {
+    src : [ 'src/app.js', 'src/components/**/*.js', 'src/modals/**/*.js', 'src/services/**/*.js', 'src/filters/**/*.js', templateCache.path + '/' + templateCache.filename ],
+    lib : []
+};
+
+var html = {
+    src : [ 'src/**/*.html' ]
+};
+
+var styles = {
+    src : [ 'src/**/*.css' ],
+    lib : []
+};
+
+var dest = {
+    js : {
+        path : 'dist',
+        filename : 'bundle.js'
+    },
+    styles : {
+        path : 'dist',
+        filename : 'bundle.css'
+    }
 };
 
 gulp.task( 'bower', function() {
-	return bower().pipe( gulp.dest( config.bowerDir ) )
+    return bower().pipe( gulp.dest( 'bower_components' ) )
 } );
 
-gulp.task( 'createTemplateCache', [ 'bower' ], function() {
-	return gulp.src( config.htmltemplates ).pipe( angularTemplateCache( config.templateCache.file, config.templateCache.options ) ).pipe( gulp.dest( config.templateCache.tmpDir ) );
+gulp.task( 'templates', [ 'bower' ], function() {
+    return gulp.src( html.src ).pipe( debug( {
+        title : 'html:'
+    } ) ).pipe( templates( templateCache.filename, templateCache.options ) ).pipe( gulp.dest( templateCache.path ) );
 } );
 
-gulp.task( 'injectTemplateCache', [ 'createTemplateCache' ], function() {
-	gulp.src( 'src/' + config.directiveJs ).pipe( replaceTask( {
-		patterns : [ {
-			match : 'templateCache',
-			replacement : fs.readFileSync( config.templateCache.tmpDir + config.templateCache.file, 'utf8' )
-		} ]
-	} ) ).pipe( gulp.dest( 'dist/js/' ) );
+gulp.task( 'js', [ 'templates' ], function() {
+    gulp.src( _.flatten( [ js.lib, js.src ] ) ).pipe( debug( {
+        title : 'javascript:'
+    } ) )
+    // .pipe( sourcemaps.init() )
+    .pipe( concat( dest.js.filename ) )
+    // .pipe( sourcemaps.write( dest.maps.path ) )
+    .pipe( gulp.dest( dest.js.path ) );
 } );
 
-gulp.task( 'clean', [ 'injectTemplateCache' ], function() {
-	gulp.src( config.templateCache.tmpDir ).pipe( clean() );
+gulp.task( 'css', [ 'js' ], function() {
+    gulp.src( _.flatten( [ styles.lib, styles.src ] ) ).pipe( debug( {
+        title : 'styles:'
+    } ) )
+    // .pipe( sourcemaps.init() )
+    .pipe( concat( dest.styles.filename ) )
+    // .pipe( sourcemaps.write( dest.maps.path ) )
+    .pipe( gulp.dest( dest.styles.path ) );
 } );
 
-gulp.task( 'css', [ 'bower' ], function() {
-	gulp.src( 'src/' + config.directiveCss ).pipe( gulp.dest( 'dist/css/' ) );
-} );
-
-gulp.task( 'default', [ 'bower', 'css', 'createTemplateCache', 'injectTemplateCache', 'clean' ] );
+gulp.task( 'default', [ 'css', 'js' ] );

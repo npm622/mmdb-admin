@@ -1,0 +1,30 @@
+<div class="modal-header">
+    <h3 class="modal-title">add new: {{$ctrl.table.displayName}}</h3>
+</div>
+<div class="modal-body">
+    <form ng-submit="$ctrl.add()">
+        <div
+            ng-repeat="col in $ctrl.table.columns"
+            class="form-group">
+            <label
+                id="{{col.sqlName}}"
+                class="control-label"
+                for="{{col.sqlName}}">{{col.displayName}}</label> <input
+                type="text"
+                ng-model="$ctrl.dto[col.fieldName]"
+                ng-disabled="col.isUneditable"
+                class="form-control"
+                placeholder="{{col.placeholder}}">
+        </div>
+    </form>
+</div>
+<div class="modal-footer">
+    <button
+        class="btn btn-primary"
+        type="button"
+        ng-click="$ctrl.ok()">ok</button>
+    <button
+        class="btn btn-warning"
+        type="button"
+        ng-click="$ctrl.cancel()">cancel</button>
+</div>
