@@ -23,14 +23,24 @@
                             <button
                                 class="btn btn-sm btn-success"
                                 ng-click="$ctrl.showAddForm()">add...</button>
-                        </span> <input
+                        </div>
+                        <input
                             type="text"
                             class="form-control"
                             aria-label="search"
                             placeholder="search"
-                            ng-model="$ctrl.searchInput"> <span
+                            ng-model="$ctrl.searchInput">
+                        <div class="input-group-btn">
+                            <button
+                                class="btn btn-sm btn-default"
+                                ng-click="$ctrl.search()">
+                                <span class="fa fa-search"></span>
+                            </button>
+                        </div>
+
+                        <!--  <span
                             class="input-group-addon fa fa-search"
-                            ng-click="$ctrl.search()"></span>
+                            ng-click="$ctrl.search()"></span> -->
                     </div>
                 </div>
 
