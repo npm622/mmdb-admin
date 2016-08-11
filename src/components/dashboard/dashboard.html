@@ -17,19 +17,19 @@
                 </div>
 
                 <div class="panel-body">
-                    <button
-                        ng-click="$ctrl.showAddForm()"
-                        class="btn btn-lg btn-success">add...</button>
-                    <div class="form-inline">
-                        <div class="input-group">
-                            <input
-                                type="text"
-                                class="form-control"
-                                placeholder="search"
-                                ng-model="$ctrl.searchInput"> <span
-                                class="input-group-addon fa fa-search"
-                                ng-click="$ctrl.search()"></span>
-                        </div>
+
+                    <div class="input-group">
+                        <button
+                            class="btn btn-success input-group-addon"
+                            ng-click="$ctrl.showAddForm()">add...</button>
+                        <input
+                            type="text"
+                            class="form-control"
+                            aria-label="search"
+                            placeholder="search"
+                            ng-model="$ctrl.searchInput"> <span
+                            class="input-group-addon fa fa-search"
+                            ng-click="$ctrl.search()"></span>
                     </div>
                 </div>
 
