@@ -10,15 +10,15 @@
 
         return {
             json : json,
-            findTableByName : function( sqlName ) {
-                return findTableByName( sqlName );
+            findTableByName : function( name ) {
+                return findTableByName( name );
             }
         };
 
-        function findTableByName( sqlName ) {
+        function findTableByName( name ) {
             for ( var i = 0; i < json.tables.length; i++ ) {
                 var table = json.tables[i];
-                if ( table.sqlName === sqlName ) {
+                if ( table.name === name ) {
                     return table;
                 }
             }

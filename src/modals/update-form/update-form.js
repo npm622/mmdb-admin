@@ -10,7 +10,7 @@
         },
         bindings : {
             table : '<',
-            dto : '<',
+            resource : '<',
             onUpdate : '&'
         },
         controller : function() {
@@ -19,20 +19,30 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                modalInstance.result.then( function( dto ) {
+                modalInstance.result.then( function( resource ) {
                     vm.onUpdate( {
-                        dto : dto
+                        resource : resource
                     } );
                 }, function() { // do nothing
                 } );
 
                 vm.ok = function() {
-                    modalInstance.close( vm.dto );
+                    modalInstance.close( vm.resource );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
+            }
+            
+            vm.isPkCol = function(col) {
+                return col.type === 'PRIMARY_KEY';
+            }
+
+            vm.isColEditable = function( col ) {
+                var isPrimaryKey = col.type === 'PRIMARY_KEY';
+                var isDateAudit = col.type === 'DATE_AUDIT';
+                return !isPrimaryKey && !isDateAudit;
             }
         }
     } );

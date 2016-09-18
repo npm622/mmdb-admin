@@ -8,9 +8,7 @@
     function LocalDateTimeFilter() {
         return function( localDateTime ) {
             if ( localDateTime ) {
-                console.log( 'TODO: implement a better local date time filter...' );
-                console.log( localDateTime );
-                return new Date( localDateTime[0], localDateTime[1] - 1, localDateTime[2] );
+                return new Date( localDateTime[0], localDateTime[1] - 1, localDateTime[2], localDateTime[3], localDateTime[4], localDateTime[5] );
             } else {
                 return null;
             }

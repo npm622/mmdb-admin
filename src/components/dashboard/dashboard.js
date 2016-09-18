@@ -5,34 +5,34 @@
 
     .component( 'dashboard', {
         templateUrl : 'components/dashboard/dashboard.html',
-        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', 'Item', DashboardCtrl ]
+        controller : [ '$document', '$filter', '$location', '$uibModal', 'Schema', 'Table', 'Resource', DashboardCtrl ]
     } );
 
-    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table, Item ) {
+    function DashboardCtrl( $document, $filter, $location, $uibModal, Schema, Table, Resource ) {
         var vm = this;
 
         vm.schema = Schema.json;
         vm.activeTable = determineActiveTable();
 
         setupSortAndSearch();
-        getItems();
+        getResources();
 
         vm.search = function() {
             vm.filter.$ = vm.searchInput;
         }
 
         vm.switchTableView = function( table ) {
-            if ( vm.activeTable.sqlName === table.sqlName ) {
+            if ( vm.activeTable.name === table.name ) {
                 return;
             }
 
             vm.activeTable = table;
             $location.search( {
-                'table' : vm.activeTable.sqlName
+                'table' : vm.activeTable.name
             } );
 
             setupSortAndSearch();
-            getItems();
+            getResources();
         }
 
         vm.sortBy = function( col ) {
@@ -44,13 +44,8 @@
             }
         }
 
-        vm.itemValue = function( item, column ) {
-            var val;
-            if ( !vm.activeTable.isSimplePk && column.isPk ) {
-                val = item[vm.activeTable.pkKey][column.fieldName];
-            } else {
-                val = item[column.fieldName];
-            }
+        vm.resourceValue = function( resource, column ) {
+            var val = resource[column.fieldName];
 
             if ( column.filters ) {
                 for ( var i = 0; i < column.filters.length; i++ ) {
@@ -58,12 +53,10 @@
 
                     if ( filter.name === 'currency' ) {
                         val = $filter( filter.name )( val, filter.symbol, filter.fractionSize );
-                    } else if ( filter.name === 'localDate' ) {
-                        val = $filter( 'date' )( $filter( 'localDateFilter' )( val ), filter.format, filter.timeZone );
-                    } else if ( filter.name === 'localDateTime' ) {
-                        val = $filter( 'date' )( $filter( 'localDateTimeFilter' )( val ), filter.format, filter.timeZone );
+                    } else if ( filter.name === 'date' ) {
+                        val = $filter( filter.name )( $filter( filter.type + 'Filter' )( val ), filter.format, filter.timeZone );
                     } else {
-                        val = $filter( filter.name )( val );
+                        val = $filter( filter.type )( val );
                     }
                 }
             }
@@ -75,51 +68,50 @@
             var activeTable = vm.activeTable;
 
             vm.modalInstance = $uibModal.open( {
-                template : '<add-form table="$ctrl.activeTable" on-add="$ctrl.addItem(dto)"></add-form>',
+                template : '<add-form table="$ctrl.activeTable" on-add="$ctrl.addResource(resource)"></add-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
                     vm.activeTable = activeTable;
-                    vm.addItem = function( dto ) {
-                        addItem( dto );
+                    vm.addResource = function( resource ) {
+                        addResource( resource );
                     }
                 }
             } );
         }
 
-        vm.showUpdateForm = function( item ) {
+        vm.showUpdateForm = function( resource ) {
             var activeTable = vm.activeTable;
-            var dtoToUpdate = Item.convertItem( vm.activeTable.sqlName, item );
 
             vm.modalInstance = $uibModal.open( {
-                template : '<update-form table="$ctrl.activeTable" dto="$ctrl.dtoToUpdate" on-update="$ctrl.updateItem(dto)"></update-form>',
+                template : '<update-form table="$ctrl.activeTable" resource="$ctrl.resourceToUpdate" on-update="$ctrl.updateResource(resource)"></update-form>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
                     vm.activeTable = activeTable;
-                    vm.dtoToUpdate = dtoToUpdate;
-                    vm.updateItem = function( dto ) {
-                        updateItem( dto );
+                    vm.resourceToUpdate = resource;
+                    vm.updateResource = function( resource ) {
+                        updateResource( resource );
                     }
                 }
             } );
         }
 
-        vm.showDeleteConfirm = function( item ) {
+        vm.showDeleteConfirm = function( resource ) {
             var activeTable = vm.activeTable;
-            
+
             vm.modalInstance = $uibModal.open( {
-                template : '<delete-confirm table="$ctrl.activeTable" item="$ctrl.itemToDelete" on-delete="$ctrl.deleteItem(item)"></delete-confirm>',
+                template : '<delete-confirm table="$ctrl.activeTable" resource="$ctrl.resourceToDelete" on-delete="$ctrl.deleteResource(resource)"></delete-confirm>',
                 appendTo : $document.find( 'dashboard' ), // this is to provide the modal instance
                 controllerAs : '$ctrl',
                 controller : function() {
                     var vm = this;
                     vm.activeTable = activeTable;
-                    vm.itemToDelete = item;
-                    vm.deleteItem = function( item ) {
-                        deleteItem( item );
+                    vm.resourceToDelete = resource;
+                    vm.deleteResource = function( resource ) {
+                        deleteResource( resource );
                     }
                 }
             } );
@@ -135,37 +127,34 @@
             vm.sortDirection = false;
         }
 
-        function getItems() {
-            Table.fetchAll( vm.activeTable ).then( function( items ) {
-                vm.items = items;
+        function getResources() {
+            Table.fetchAll( vm.activeTable ).then( function( resources ) {
+                vm.resources = resources;
             }, function() {
             } );
         }
 
-        function addItem( dto ) {
-            var item = Item.convertDto( vm.activeTable.sqlName, dto );
-
-            Table.keep( vm.activeTable, item ).then( function( item ) {
-                getItems();
+        function addResource( resource ) {
+            Table.keep( vm.activeTable, resource ).then( function( resource ) {
+                getResources();
             }, function() {
             } );
         }
 
-        function updateItem( dto ) {
-            var item = Item.convertDto( vm.activeTable.sqlName, dto );
-            var pk = Item.determinePk( vm.activeTable.sqlName, item );
+        function updateResource( resource ) {
+            var pk = Resource.determinePk( vm.activeTable.name, resource );
 
-            Table.modify( vm.activeTable, pk, item ).then( function( item ) {
-                getItems();
+            Table.modify( vm.activeTable, resource, pk ).then( function( resource ) {
+                getResources();
             }, function() {
             } );
         }
 
-        function deleteItem( item ) {
-            var pk = Item.determinePk( vm.activeTable.sqlName, item );
+        function deleteResource( resource ) {
+            var pk = Resource.determinePk( vm.activeTable.name, resource );
 
-            Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( item ) {
-                getItems();
+            Table.dropByPrimaryKey( vm.activeTable, pk ).then( function( resource ) {
+                getResources();
             }, function() {
             } );
         }

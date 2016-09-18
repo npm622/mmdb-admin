@@ -52,21 +52,21 @@
                         </tr>
                     </thead>
                     <tbody>
-                        <tr ng-repeat="item in $ctrl.items | filter : $ctrl.filter | orderBy : $ctrl.sortExpression : $ctrl.sortDirection as filteredItems">
-                            <td class="item-row-buttons">
+                        <tr ng-repeat="resource in $ctrl.resources | filter : $ctrl.filter | orderBy : $ctrl.sortExpression : $ctrl.sortDirection as filteredResources">
+                            <td class="resource-row-buttons">
                                 <div
                                     class="btn-group btn-group-xs"
                                     role="group"
                                     aria-label="...">
                                     <button
-                                        ng-click="$ctrl.showUpdateForm(item)"
+                                        ng-click="$ctrl.showUpdateForm(resource)"
                                         class="btn btn-info">
                                         <i
                                             class="fa fa-wrench fa-fw"
                                             aria-hidden="true"></i>
                                     </button>
                                     <button
-                                        ng-click="$ctrl.showDeleteConfirm(item)"
+                                        ng-click="$ctrl.showDeleteConfirm(resource)"
                                         class="btn btn-danger">
                                         <i
                                             class="fa fa-times-circle fa-fw"
@@ -74,7 +74,7 @@
                                     </button>
                                 </div>
                             </td>
-                            <td ng-repeat="col in $ctrl.activeTable.columns">{{$ctrl.itemValue(item, col)}}</td>
+                            <td ng-repeat="col in $ctrl.activeTable.columns">{{$ctrl.resourceValue(resource, col)}}</td>
                         </tr>
                     </tbody>
                 </table>

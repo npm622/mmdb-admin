@@ -7,12 +7,12 @@
             ng-repeat="col in $ctrl.table.columns"
             class="form-group">
             <label
-                id="{{col.sqlName}}"
+                id="{{col.name}}"
                 class="control-label"
-                for="{{col.sqlName}}">{{col.displayName}}</label> <input
+                for="{{col.name}}">{{col.displayName}}</label> <input
                 type="text"
-                ng-model="$ctrl.dto[col.fieldName]"
-                ng-disabled="col.isUneditable"
+                ng-model="$ctrl.resource[col.fieldName]"
+                ng-disabled="!$ctrl.isColEditable(col)"
                 class="form-control"
                 placeholder="{{col.placeholder}}">
         </div>

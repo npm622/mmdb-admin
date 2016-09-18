@@ -18,20 +18,26 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                modalInstance.result.then( function( dto ) {
+                modalInstance.result.then( function( resource ) {
                     vm.onAdd( {
-                        dto : dto
+                        resource : resource
                     } );
                 }, function() { // do nothing
                 } );
 
                 vm.ok = function() {
-                    modalInstance.close( vm.dto );
+                    modalInstance.close( vm.resource );
                 }
 
                 vm.cancel = function() {
                     modalInstance.dismiss( 'cancel' );
                 }
+            }
+
+            vm.isColEditable = function( col ) {
+                var isPrimaryKey = col.type === 'PRIMARY_KEY' && vm.table.isManagedResource;
+                var isDateAudit = col.type === 'DATE_AUDIT';
+                return !isPrimaryKey && !isDateAudit;
             }
         }
     } );

@@ -10,7 +10,7 @@
         },
         bindings : {
             table : '<',
-            item : '<',
+            resource : '<',
             onDelete : '&'
         },
         controller : function() {
@@ -19,15 +19,15 @@
             vm.$onInit = function() {
                 var modalInstance = vm.parent.modalInstance;
 
-                modalInstance.result.then( function( item ) {
+                modalInstance.result.then( function( resource ) {
                     vm.onDelete( {
-                        item : item
+                        resource : resource
                     } );
                 }, function() { // do nothing
                 } );
 
                 vm.ok = function() {
-                    modalInstance.close( vm.item );
+                    modalInstance.close( vm.resource );
                 }
 
                 vm.cancel = function() {

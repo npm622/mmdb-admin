@@ -3,8 +3,21 @@
 </div>
 <div class="modal-body">
     <p>are you sure you want to delete me?</p>
-    <hr />
-    <pre>{{$ctrl.item | json}}</pre>
+    <form>
+        <div
+            ng-repeat="col in $ctrl.table.columns"
+            class="form-group">
+            <label
+                id="{{col.name}}"
+                class="control-label"
+                for="{{col.name}}">{{col.displayName}}</label> <input
+                type="text"
+                ng-model="$ctrl.resource[col.fieldName]"
+                ng-disabled="true"
+                class="form-control"
+                placeholder="{{col.placeholder}}">
+        </div>
+    </form>
 </div>
 <div class="modal-footer">
     <button
